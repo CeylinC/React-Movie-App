@@ -1,0 +1,78 @@
+.navbar{
+    background-color: var(--navbar-color);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.navbar #logo{
+    margin-right: 20px;
+    font-weight: bold;
+    font-size: 2rem;
+}
+.navbar #logo span{
+    color: var(--primary-color);
+    font-weight: normal;
+}
+.navbar #search-box{
+    background-color: var(--input-color);
+    width: 80%;
+    border-radius: 7px;
+}
+#search-box :where(.css-dev-only-do-not-override-1xb5ddc).ant-btn-default {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    color: var(--primary-color);
+}
+#search-box :where(.css-dev-only-do-not-override-1xb5ddc).ant-input-group .ant-input-group-addon {
+    background-color: transparent;
+}
+.navbar-group{
+    display: flex;
+    align-items: center;
+}
+#favorite-button .button{
+    color: #eb0000;
+    background-color: var(--input-color);
+    border: none;
+    margin: 0 20px;
+}
+#user{
+    display: inline-flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+#user .greeting{
+    font-size: 0.7rem;
+    margin-right: 10px;
+    color: #81818f;
+    text-align: end;
+}
+#user .greeting .user-name{
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}
+@media screen and (max-width:768px) {
+    .navbar #search-box{
+        width: 65%;
+    }
+}
+@media screen and (max-width: 425px) {
+    .navbar{
+        align-items: start;
+        height: 135px;
+    }
+    .navbar #search-box{
+        box-sizing: border-box;
+        position: absolute;
+        top: 80px;
+        left: 10px;
+        right: 10px;
+        width: auto;
+    }
+}
