@@ -26,7 +26,6 @@ function MovieCard({ name, year, imdb, img } : IProp) {
           },
         }}
       >
-        <span></span>
         <div className="imdb">
           {imdb}
         </div>
