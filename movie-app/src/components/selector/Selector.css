@@ -1,0 +1,28 @@
+.selector{
+    background-color: #33373f;
+    padding-left: 10px;
+    border-radius: 5px;
+}
+.selector .selector-label{
+font-size: 0.8rem;
+}
+.selector-select{
+min-width: 100px;
+}
+.selector :where(.css-dev-only-do-not-override-fpg3f5).ant-select-single .ant-select-selector,
+.selector :where(.css-dev-only-do-not-override-fpg3f5).ant-select .ant-select-arrow {
+color: white !important;
+}
+.selector :where(.css-dev-only-do-not-override-fpg3f5).ant-select-single.ant-select-open .ant-select-selection-item{
+color: grey;
+}
+:where(.css-dev-only-do-not-override-fpg3f5).ant-select-dropdown {
+    background-color: var(--navbar-color);
+}
+:where(.css-dev-only-do-not-override-fpg3f5).ant-select-dropdown .ant-select-item {
+    color: white;
+}
+:where(.css-dev-only-do-not-override-fpg3f5).ant-select-dropdown .ant-select-item-option-selected:not(.ant-select-item-option-disabled){
+    background-color: var(--input-color);
+    color: var(--primary-color);
+}
