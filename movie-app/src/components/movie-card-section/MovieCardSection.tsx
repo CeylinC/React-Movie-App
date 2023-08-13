@@ -18,6 +18,7 @@ function MovieCardSection({ filter } : IProp) {
               return(
                 <MovieCard
                   movie={movie}
+                  key={movie.id}
                 />
               );
             })
@@ -25,6 +26,7 @@ function MovieCardSection({ filter } : IProp) {
             moviesList.filter(movie => movie.category === filter).map((movie) => 
                 <MovieCard
                   movie={movie}
+                  key={movie.id}
                 />
             )
           }
