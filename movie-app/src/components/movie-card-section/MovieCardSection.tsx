@@ -1,37 +1,34 @@
 import React from 'react';
 import './MovieCardSection.css';
 import MovieCard from '../movie-card/MovieCard';
-import { ConfigProvider, Pagination, theme } from 'antd';
+import { useMoviesStore } from '../../state/Movies';
 
-function MovieCardSection() {
+interface IProp{
+  filter: string;
+}
+
+function MovieCardSection({ filter } : IProp) {
+  const moviesList = useMoviesStore((state) => state.movies)
   return (
     <div className="movie-card-section">
       <div className="movie-card-list">
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-          <MovieCard name="Movie Name" year='0000' imdb='0.0' img='https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810'/>
-      </div>
-      <ConfigProvider
-        theme={{
-          algorithm: theme.darkAlgorithm,
-          components: {
-            Pagination: {
-              itemActiveBg: "#ffc32c",
-              colorPrimary: "fff",
-              colorPrimaryHover: "fff",
-            }
+          {
+            filter === "all" ?
+            moviesList.map((movie) => {
+              return(
+                <MovieCard
+                  movie={movie}
+                />
+              );
+            })
+            :
+            moviesList.filter(movie => movie.category === filter).map((movie) => 
+                <MovieCard
+                  movie={movie}
+                />
+            )
           }
-        }}
-        >
-        <Pagination defaultCurrent={1} total={50} className='pagination'/>
-      </ConfigProvider>
+      </div>
     </div>
   );
 }

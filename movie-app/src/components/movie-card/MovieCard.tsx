@@ -1,15 +1,13 @@
+import { IMovie } from "../../interface/IMovie";
 import "./MovieCard.css";
 import { Card, ConfigProvider, theme } from "antd";
 const { Meta } = Card;
 
-interface IProp {
-    name: string,
-    year: string,
-    imdb: string,
-    img: string
+interface IProp{
+  movie : IMovie
 }
 
-function MovieCard({ name, year, imdb, img } : IProp) {
+function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
   return (
     <div className="movie-card">
       <ConfigProvider
@@ -35,7 +33,7 @@ function MovieCard({ name, year, imdb, img } : IProp) {
         cover={
           <img
             alt="Movie Poster"
-            src={img}
+            src={poster}
           />
         }
       >
