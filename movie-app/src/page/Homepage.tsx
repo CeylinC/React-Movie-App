@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css';
-import Navbar from '../components/navbar/Navbar';
 import Selector from '../components/selector/Selector';
 import MovieCardSection from '../components/movie-card-section/MovieCardSection';
 import {nextQuery, getData, firstQuery} from '../service/Post';
 import { useMoviesStore } from '../state/Movies';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ISortSelector } from '../interface/ISortSelector';
+import { useSearchParams } from 'react-router-dom';
 
 function Homepage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentParams = Object.fromEntries([...searchParams]);
   const { movies, addMovie, clearMovies } = useMoviesStore();
-  const [filter, setFilter] = useState<string>("all");
-  const [sort, setSort] = useState<ISortSelector>({sortType: "name", sortDirection: "asc"});
+  const [filter, setFilter] = useState<string>(currentParams.filter !== undefined ? currentParams.filter : "all");
+  const [sort, setSort] = useState<ISortSelector>({sort: currentParams.sort !== undefined ? currentParams.sort : "name", order: currentParams.order === "asc" || currentParams.order === "desc" ? currentParams.order : "asc"});
   const [hasMore, setHasMore] = useState(true);
 
   const fetchMoreData = () => {
     const getMovieData = async() => {
-      let data = await getData(await nextQuery(sort));
+      let data = await getData(await nextQuery(sort), sort.sort);
       data.forEach(a => addMovie(a));
     }
     getMovieData();
@@ -27,31 +29,39 @@ function Homepage() {
 
   const getFirstMovieData = () => {
     const getMovieData = async () => {
-      let movieList = await getData(await firstQuery(sort));
+      let movieList = await getData(await firstQuery(sort), sort.sort);
       movieList.forEach(movie => addMovie(movie));
     }
     getMovieData();
   }
 
-  const changeSort = (value: string) : ISortSelector => {
+  const changeSort = (value: string) => {
     clearMovies();
     switch(value){
-      case "a - z":
-        return {sortType: "name", sortDirection: "asc"};
-      case "z - a":
-        return {sortType: "name", sortDirection: "desc"};
+      case "az":
+        setSort({sort: "name", order: "asc"});
+        break;
+      case "za":
+        setSort({sort: "name", order: "desc"});
+        break;
       case "latest":
-        return {sortType: "year", sortDirection: "desc"};
+        setSort({sort: "year", order: "desc"});
+        break;
       case "oldest":
-        return {sortType: "year", sortDirection: "asc"};
+        setSort({sort: "year", order: "asc"});
+        break;
       default:
-        return {sortType: "name", sortDirection: "asc"};
+        setSort({sort: "name", order: "asc"});
+        break;
     }
   }
 
   useEffect(() => {
+    setSearchParams({filter: filter, sort: sort.sort, order: sort.order});
     getFirstMovieData();
-  }, []);
+  }, [sort]);
+  
+  useEffect(() => setSearchParams({filter: filter, sort: sort.sort, order: sort.order}), [filter]);
 
   return (
     <div className="Homepage">
@@ -76,7 +86,10 @@ function Homepage() {
             label: "Oldest",
           },
         ]}
-        onChange={(value) => setSort(changeSort(value))}
+        defaultValue={
+            sort.order === "desc" ? (sort.sort === "name" ? "Z - A" : "Latest") : (sort.sort === "name" ? "A - Z": "Oldest")
+        }
+        onChange={(value) => changeSort(value)}
       />
       </div>
       <div className="filter-menu">
@@ -106,9 +119,9 @@ function Homepage() {
               value: "romantic",
               label: "Romantic",
             },
-            
           ]}
-          onChange={(value) => setFilter(value) }
+          defaultValue={filter}
+          onChange={(value) => setFilter(value)}
         />
       </div>
     </div>
@@ -119,7 +132,7 @@ function Homepage() {
       loader={<h4>Loading...</h4>}
       endMessage={<p>No more items to load</p>}
     >
-    <MovieCardSection filter={filter}/>
+        <MovieCardSection filter={filter}/>
     </InfiniteScroll>
     </div>
   );
