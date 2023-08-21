@@ -3,19 +3,32 @@ import './App.css';
 import Navbar from './components/navbar/Navbar';
 import Selector from './components/selector/Selector';
 import MovieCardSection from './components/movie-card-section/MovieCardSection';
-import getData from './service/firebase';
+import {nextQuery, getData, firstQuery} from './service/Post';
 import { useMoviesStore } from './state/Movies';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 function App() {
-  const { movies, addMovie} = useMoviesStore();
+  const { movies, addMovie } = useMoviesStore();
   const [filter, setFilter] = useState<string>("all");
+  const [hasMore, setHasMore] = useState(true);
+
+  const fetchMoreData = () => {
+    const getMovieData = async() => {
+      let data = await getData(await nextQuery());
+      data.forEach(a => addMovie(a));
+    }
+    getMovieData();
+    if (movies.length >= 20) {
+      setHasMore(false);
+    }
+  };
 
   useEffect(() => {
     const getMovieData = async () => {
-      addMovie(await getData());
-      console.log("a");
+      let movieList = await getData(await firstQuery());
+      movieList.forEach(movie => addMovie(movie));
     }
-    getMovieData();
+  getMovieData();
   }, []);
 
   return (
@@ -69,7 +82,15 @@ function App() {
         />
       </div>
     </div>
+    <InfiniteScroll
+      dataLength={movies.length}
+      next={fetchMoreData}
+      hasMore={hasMore}
+      loader={<h4>Loading...</h4>}
+      endMessage={<p>No more items to load</p>}
+    >
     <MovieCardSection filter={filter}/>
+    </InfiniteScroll>
     </div>
   );
 }
