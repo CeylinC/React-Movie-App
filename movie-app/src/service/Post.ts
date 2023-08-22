@@ -1,4 +1,4 @@
-import { query, orderBy, limit, QuerySnapshot } from "firebase/firestore"; 
+import { query, orderBy, limit, QuerySnapshot, startAt, endAt, where } from "firebase/firestore"; 
 import { IMovie } from "../interface/IMovie";
 import { getDocs, startAfter } from "firebase/firestore";
 import moviesRef from "../util/firebase";
@@ -29,9 +29,13 @@ const firstQuery = async (sort: ISortSelector) => {
 }
 
 const nextQuery = async (sort: ISortSelector) => {
-    console.log(lastKey)
     const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(3), startAfter(lastKey));
     return await getDocs(batch);
 }
 
-export { getData, firstQuery, nextQuery };
+const searchQuery = async (search: string) => {
+    const batch = query(moviesRef, orderBy("name"), where("name", ">=", search), where("name", "<=", search + "\uf8ff"));
+    return await getDocs(batch);
+}
+
+export { getData, firstQuery, nextQuery, searchQuery };

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css';
-import Selector from '../components/selector/Selector';
-import MovieCardSection from '../components/movie-card-section/MovieCardSection';
-import {nextQuery, getData, firstQuery} from '../service/Post';
-import { useMoviesStore } from '../state/Movies';
+import Selector from '../../components/selector/Selector';
+import MovieCardSection from '../../components/movie-card-section/MovieCardSection';
+import {nextQuery, getData, firstQuery} from '../../service/Post';
+import { useMoviesStore } from '../../state/Movies';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { ISortSelector } from '../interface/ISortSelector';
+import { ISortSelector } from '../../interface/ISortSelector';
 import { useSearchParams } from 'react-router-dom';
 
 function Homepage() {
