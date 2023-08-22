@@ -6,9 +6,8 @@ import { ISortSelector } from "../interface/ISortSelector";
 
 let lastKey = "";
 
-const getData = async (query : QuerySnapshot) => {
+const getData = async (query : QuerySnapshot, sortType: string) => {
     const movies : IMovie[] = [];
-    
     query.forEach((doc) => {
         movies.push({
             id: doc.id ?? "null",
@@ -18,19 +17,20 @@ const getData = async (query : QuerySnapshot) => {
             imdb: doc.data().imdb ?? 0.0,
             category: doc.data().category ?? ""
         });
-        lastKey = doc.data().name;
+        lastKey = doc.data()[sortType]; //Yıl ile sıranırken hata yaşanmaz mı?
     })
     return movies;
 }
 
 const firstQuery = async (sort: ISortSelector) => {
     lastKey = "";
-    const batch = query(moviesRef, orderBy(sort.sortType, sort.sortDirection), limit(3));
+    const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(3));
     return await getDocs(batch);
 }
 
 const nextQuery = async (sort: ISortSelector) => {
-    const batch = query(moviesRef, orderBy(sort.sortType, sort.sortDirection), limit(3), startAfter(lastKey));
+    console.log(lastKey)
+    const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(3), startAfter(lastKey));
     return await getDocs(batch);
 }
 

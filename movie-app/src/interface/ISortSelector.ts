@@ -1,4 +1,4 @@
 export interface ISortSelector{
-    sortType: string,
-    sortDirection: "desc" | "asc",
+    sort: string,
+    order: "desc" | "asc",
 }

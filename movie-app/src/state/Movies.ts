@@ -12,7 +12,7 @@ export const useMoviesStore = create<MovieState>((set) => ({
     addMovie: (movie: IMovie) => set((state) => ({
         movies: [...state.movies, movie]
     })),
-    clearMovies: () => set(() => ({
-        movies: []
-    }))
+    clearMovies: () => set(
+        {movies: []}
+    ),
 }));
