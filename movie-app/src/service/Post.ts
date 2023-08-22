@@ -38,4 +38,20 @@ const searchQuery = async (search: string) => {
     return await getDocs(batch);
 }
 
-export { getData, firstQuery, nextQuery, searchQuery };
+const getMovieList = async () => {
+    const movies : IMovie[] = [];
+    const querySnapshot = await getDocs(moviesRef);
+    querySnapshot.forEach((doc) => {
+        movies.push({
+            id: doc.id ?? "null",
+            name: doc.data().name ?? "İsimsiz Film",
+            poster: doc.data().poster ?? "",
+            year: doc.data().year ?? 0,
+            imdb: doc.data().imdb ?? 0.0,
+            category: doc.data().category ?? ""
+        });
+    });
+    return movies;
+}
+
+export { getData, firstQuery, nextQuery, searchQuery, getMovieList };
