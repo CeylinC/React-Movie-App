@@ -69,4 +69,8 @@ const deleteMovie = async (movieId: string) => {
     await deleteDoc(doc(db, "movies", movieId));
 }
 
-export { getData, firstQuery, nextQuery, searchQuery, getMovieList, updateMovie, deleteMovie };
+const uploadMovie = async (movie: {name: string, imdb: number, year: number, poster: string, category: string}) => {
+    await setDoc(doc(moviesRef), movie);
+}
+
+export { getData, firstQuery, nextQuery, searchQuery, getMovieList, updateMovie, deleteMovie, uploadMovie };
