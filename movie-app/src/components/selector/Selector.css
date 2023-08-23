@@ -10,8 +10,8 @@ font-size: 0.8rem;
 .selector-select{
 min-width: 100px;
 }
-.ant-select-single .ant-select-selector,
-.ant-select .ant-select-arrow {
+.selector .ant-select-single .ant-select-selector,
+.selector .ant-select .ant-select-arrow {
     color: white !important;
 }
 .ant-select-single.ant-select-open .ant-select-selection-item{
