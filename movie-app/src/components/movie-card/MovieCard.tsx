@@ -9,7 +9,7 @@ interface IProp{
 
 function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
   return (
-    <div className="movie-card">
+    <div className="movie-card" title={name}>
       <ConfigProvider
         theme={{
           algorithm: theme.darkAlgorithm,
@@ -29,7 +29,6 @@ function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
         </div>
         <Card
         bordered={false}
-        style={{ width: 240 }}
         cover={
           <img
             alt="Movie Poster"
