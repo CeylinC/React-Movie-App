@@ -9,9 +9,4 @@ body{
   background-color: var(--background-color);
   color: lightgray;
 }
-.sort-filter-menu{
-  padding: 100px 115px 10px 0;
-  display: flex;
-  justify-content: end;
-}
 
