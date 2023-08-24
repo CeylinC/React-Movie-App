@@ -11,12 +11,11 @@ import Navbar from '../../components/navbar/Navbar';
 
 function Homepage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentParams = Object.fromEntries([...searchParams]);
+  let currentParams = Object.fromEntries([...searchParams]);
   const { movies, addMovie, clearMovies } = useMoviesStore();
   const [filter, setFilter] = useState<string>(currentParams.filter !== undefined ? currentParams.filter : "all");
   const [sort, setSort] = useState<ISortSelector>({sort: currentParams.sort !== undefined ? currentParams.sort : "name", order: currentParams.order === "asc" || currentParams.order === "desc" ? currentParams.order : "asc"});
   const [hasMore, setHasMore] = useState(true);
-  const [search, setSearch] = useState<string>("");
 
   const fetchMoreData = () => {
     const getMovieData = async() => {
@@ -60,28 +59,35 @@ function Homepage() {
 
   useEffect(() => {
     setSearchParams({filter: filter, sort: sort.sort, order: sort.order});
-    getFirstMovieData();
   }, [sort]);
+
+  useEffect(() => {
+    currentParams = Object.fromEntries([...searchParams]);
+    if(currentParams.search === undefined){
+      clearMovies();
+      getFirstMovieData();
+      setHasMore(true);
+    }
+    else{
+      searchMovie(currentParams.search);
+    }
+  }, [searchParams])
   
   useEffect(() => setSearchParams({filter: filter, sort: sort.sort, order: sort.order}), [filter]);
 
-  useEffect(() => {
+  const searchMovie = async (search: string) => {
     clearMovies();
-    const searchMovie = async () => {
+    if(search.length !== 0){
       const movieList = await getData(await searchQuery(search), "name");
       movieList.forEach((movie) => addMovie(movie));
     }
-    if(search.length !== 0){
-      searchMovie();
-      setSearchParams({search: search});
-    }
-  }, [search]);
+  }
 
   return (
     <div className="Homepage">
-      <Navbar setSearch={setSearch} />
+      <Navbar setSearchParam={setSearchParams} />
       {
-        search.length === 0 ?
+        currentParams.search === undefined ?
         <>
         <div className="sort-filter-menu">
         <div className="sort-menu">

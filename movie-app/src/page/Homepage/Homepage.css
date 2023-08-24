@@ -1,0 +1,13 @@
+.Homepage{
+    margin-top: 150px;
+}
+.sort-filter-menu{
+    padding: 0 115px 10px 0;
+    display: flex;
+    justify-content: end;
+  }
+@media screen and (max-width: 768px) {
+    .sort-filter-menu{
+        padding: 0;justify-content: space-evenly;
+    }
+}
