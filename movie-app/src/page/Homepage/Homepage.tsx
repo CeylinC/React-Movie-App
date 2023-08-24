@@ -67,6 +67,9 @@ function Homepage() {
       clearMovies();
       getFirstMovieData();
     }
+    else{
+      searchMovie(currentParams.search);
+    }
   }, [searchParams])
   
   useEffect(() => setSearchParams({filter: filter, sort: sort.sort, order: sort.order}), [filter]);
