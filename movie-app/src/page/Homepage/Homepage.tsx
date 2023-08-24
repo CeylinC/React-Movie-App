@@ -66,6 +66,7 @@ function Homepage() {
     if(currentParams.search === undefined){
       clearMovies();
       getFirstMovieData();
+      setHasMore(true);
     }
     else{
       searchMovie(currentParams.search);
@@ -79,13 +80,12 @@ function Homepage() {
     if(search.length !== 0){
       const movieList = await getData(await searchQuery(search), "name");
       movieList.forEach((movie) => addMovie(movie));
-      setSearchParams({search: search});
     }
   }
 
   return (
     <div className="Homepage">
-      <Navbar searchMovie={searchMovie} />
+      <Navbar setSearchParam={setSearchParams} />
       {
         currentParams.search === undefined ?
         <>

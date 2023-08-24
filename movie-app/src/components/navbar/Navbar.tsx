@@ -4,10 +4,10 @@ import Search from "antd/es/input/Search";
 import { HeartFilled, UserOutlined } from "@ant-design/icons";
 
 interface IProp{
-  searchMovie: (value: string) => void,
+  setSearchParam: ({search}: {search: string}) => void,
 }
 
-function Navbar({searchMovie} : IProp) {
+function Navbar({setSearchParam} : IProp) {
   return (
     <div className="navbar">
       <div id="logo">M<span>O</span>W</div>
@@ -17,7 +17,7 @@ function Navbar({searchMovie} : IProp) {
       algorithm: theme.darkAlgorithm,
     }}
   >
-        <Search placeholder="Search movie..." bordered={false} size="large" onSearch={(value: string) => (searchMovie(value.charAt(0).toUpperCase() + value.slice(1)))}/>
+        <Search placeholder="Search movie..." bordered={false} size="large" onSearch={(value: string) => (setSearchParam({search: value.charAt(0).toUpperCase()+value.slice(1)}))}/>
         </ConfigProvider>
       </div>
       <div className="navbar-group">
