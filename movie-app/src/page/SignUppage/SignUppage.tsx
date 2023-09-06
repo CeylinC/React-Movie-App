@@ -2,14 +2,21 @@ import { Button, ConfigProvider, Form, Input, theme } from "antd";
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import "./SignUppage.css";
 import { createUser } from "../../service/Auth";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useUserStore } from "../../state/User";
 
 function SignUppage() {
     const navigate = useNavigate();
+    const {setUser} = useUserStore();
 
-    const onFinish = (values: { email: string, password: string, passwordConfirm: string }) => {
+    const onFinish = (values: { username: string, email: string, password: string, passwordConfirm: string }) => {
         console.log('Success:', values);
-        values.password === values.passwordConfirm ? createUser(values.email, values.password, navigate) : alert("Password does not equal password confirm")
+        if(values.password === values.passwordConfirm){
+            createUser(values.username, values.email, values.password, navigate, setUser);
+        }
+        else{
+            alert("Password does not equal password confirm");
+        }
     };
 
     const onFinishFailed = (errorInfo: any) => {

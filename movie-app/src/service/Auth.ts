@@ -1,17 +1,18 @@
 import { User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../util/firebase";
+import { auth, db } from "../util/firebase";
 import { NavigateFunction } from "react-router-dom";
 import { ErrorCode } from "../enum/Error";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { IUser } from "../interface/IUser";
 
 let user: User;
 
-const createUser = (email: string, password: string, navigate: NavigateFunction) => {
+const createUser = (username: string, email: string, password: string, navigate: NavigateFunction, setUser: (user: IUser) => void) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             user = userCredential.user;
-            navigate("/admin");
-            console.log(user);
+            setUserData(setUser, {username: username, email: user.email ? user.email : "", favoriteMovies: []}, user.uid, navigate);
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -35,13 +36,12 @@ const createUser = (email: string, password: string, navigate: NavigateFunction)
         });
 }
 
-const loginUser = (email: string, password: string, navigate: NavigateFunction) => {
+const loginUser = (email: string, password: string, navigate: NavigateFunction, setUser: (user: IUser) => void) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             user = userCredential.user;
-            navigate("/admin");
-            console.log(user);
+            getUserData(user.uid, setUser, navigate);
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -64,20 +64,25 @@ const loginUser = (email: string, password: string, navigate: NavigateFunction) 
             }
         });
 }
-
-const changeState = () => {
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          const uid = user.uid;
-          console.log(uid);
-          // ...
-        } else {
-          // User is signed out
-          // ...
-        }
-      });
+const getUserData = async (userId: string, setUser: (user: IUser) => void, navigate: NavigateFunction) => {
+    const docRef = doc(db, "users", userId);
+    const docSnap =  await getDoc(docRef);
+    const userData = docSnap.data();
+    console.log(userData);
+    if(userData){
+        setUser({username: userData.displayname, email: userData.email, favoriteMovies: userData.favoriteMovies})
+        navigate("/admin");
+    }
+    else{
+        console.log("Hata, user state düzenlenemedi");
+    }
 }
 
-export { createUser, loginUser, changeState };
+const setUserData = async (setUser: (user: IUser) => void, user: IUser, userId: string, navigate: NavigateFunction) => {
+    const docRef = doc(db, "users", userId);
+    await setDoc(docRef, user);
+    setUser(user);
+    navigate("/admin");
+}
+
+export { createUser, loginUser };

@@ -3,13 +3,15 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import "./LogInpage.css";
 import { loginUser } from "../../service/Auth";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../state/User";
 
 function LogInpage() {
     const navigate = useNavigate();
+    const { setUser } = useUserStore();
 
     const onFinish = (values: {email: string, password: string}) => {
         console.log('Success:', values);
-        loginUser(values.email, values.password, navigate);
+        loginUser(values.email, values.password, navigate, setUser);
     };
 
     const onFinishFailed = (errorInfo: any) => {
