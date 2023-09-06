@@ -2,7 +2,7 @@ import { Button, ConfigProvider, Form, Input, theme } from "antd";
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import "./SignUppage.css";
 import { createUser } from "../../service/Auth";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserStore } from "../../state/User";
 
 function SignUppage() {
@@ -84,7 +84,7 @@ function SignUppage() {
                         </Button>
                     </Form.Item>
                     <div>
-                        Or <a href="">login now!</a>
+                        Or <Link to={"/log-in"}>login now!</Link>
                     </div>
                 </Form>
             </ConfigProvider>
