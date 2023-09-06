@@ -1,7 +1,7 @@
 import "./Adminpage.css";
 import { Layout, Menu, theme } from 'antd';
 import { useEffect } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, useSearchParams, useLocation } from "react-router-dom";
 import { useUserStore } from "../../state/User";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -18,6 +18,7 @@ interface IProp{
 function Adminpage() {
   const navigate = useNavigate();
   const {user} = useUserStore();
+  const location = useLocation();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -29,10 +30,10 @@ function Adminpage() {
   }
 
   useEffect(() => {
-    if(user.email === ""){
+    if(user.email === undefined){
       navigate("/log-in");
     }
-  }, [])
+  }, [user])
 
   return (
      <Layout className="Adminpage">
@@ -44,7 +45,7 @@ function Adminpage() {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['/admin/movie-list']}
+          defaultSelectedKeys={[location.pathname]}
           items={navigation}
           onClick={handleMenuClick}
         />
