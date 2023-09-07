@@ -71,7 +71,7 @@ const getUserData = async (userId: string, setUser: (user: IUser) => void, navig
     console.log(userData);
     if(userData){
         setUser({username: userData.displayname, email: userData.email, favoriteMovies: userData.favoriteMovies})
-        navigate("/admin");
+        navigate("/admin/movie-list");
     }
     else{
         console.log("Hata, user state düzenlenemedi");
@@ -82,7 +82,7 @@ const setUserData = async (setUser: (user: IUser) => void, user: IUser, userId: 
     const docRef = doc(db, "users", userId);
     await setDoc(docRef, user);
     setUser(user);
-    navigate("/admin");
+    navigate("/admin/movie-list");
 }
 
 export { createUser, loginUser };
