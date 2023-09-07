@@ -1,8 +1,8 @@
 import { query, orderBy, limit, QuerySnapshot, where, setDoc, doc, getDocs, startAfter, updateDoc, deleteDoc } from "firebase/firestore"; 
-import { IMovie } from "../interface/IMovie";
+import { IMovie } from "../model/interface/IMovie";
 import { moviesRef, db } from "../util/firebase";
-import { ISortSelector } from "../interface/ISortSelector";
-import { IColumn } from "../interface/IColumn";
+import { ISortSelector } from "../model/interface/ISortSelector";
+import { IColumn } from "../model/interface/IColumn";
 
 let lastKey = "";
 

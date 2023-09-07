@@ -1,4 +1,4 @@
-import { IMovie } from "../../interface/IMovie";
+import { IMovie } from "../../model";
 import "./MovieCard.css";
 import { Card, ConfigProvider, theme } from "antd";
 const { Meta } = Card;
@@ -7,7 +7,7 @@ interface IProp{
   movie : IMovie
 }
 
-function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
+export function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
   return (
     <div className="movie-card" title={name}>
       <ConfigProvider
@@ -42,5 +42,3 @@ function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
     </div>
   );
 }
-
-export default MovieCard;
