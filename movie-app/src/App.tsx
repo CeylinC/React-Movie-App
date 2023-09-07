@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { LogInpage, Homepage, Adminpage, MovieListpage, AddMoviepage, SignUppage, MovieDetail } from './page';
-import { HomepageMovieList } from './page/home/subpage/movie-list/MovieList';
+import { LogInpage, Homepage, Adminpage, MovieListpage, AddMoviepage, SignUppage, MovieDetail, HomepageMovieList } from './page';
 
 function App() {
 
