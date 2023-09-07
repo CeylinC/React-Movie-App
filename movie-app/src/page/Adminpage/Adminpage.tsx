@@ -1,6 +1,8 @@
 import "./Adminpage.css";
 import { Layout, Menu, theme } from 'antd';
+import { useEffect } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
+import { useUserStore } from "../../state/User";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -15,6 +17,7 @@ interface IProp{
 
 function Adminpage() {
   const navigate = useNavigate();
+  const {user} = useUserStore();
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -24,6 +27,12 @@ function Adminpage() {
       navigate(key);
     }
   }
+
+  useEffect(() => {
+    if(user.email === ""){
+      navigate("/log-in");
+    }
+  }, [])
 
   return (
      <Layout className="Adminpage">

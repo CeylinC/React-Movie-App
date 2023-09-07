@@ -1,0 +1,44 @@
+.sign-up-page{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100vh;
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url(https://wallpapers.com/images/featured/movie-9pvmdtvz4cb0xl37.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.sign-up-form{
+    background-color: var(--navbar-color);
+    width: 50%;
+    max-width: 500px;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    height: 100vh;
+    box-shadow: -10px -10px 20px 12px rgba(0, 0, 0, 0.4);
+}
+
+.sign-up-form a{
+    color: var(--primary-color);
+}
+
+.sign-up-form .ant-form-item{
+    width: 100%;
+}
+
+@media screen and (max-width: 425px) {
+    .sign-up-page{
+        justify-content: center;
+        background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url(https://wallpapers.com/images/featured/movie-9pvmdtvz4cb0xl37.jpg);
+    }
+    .sign-up-form{
+        box-shadow: 0 0 20px 12px rgba(0, 0, 0, 0.4);
+        height: auto;
+        border-radius: 10px;
+    }
+}
