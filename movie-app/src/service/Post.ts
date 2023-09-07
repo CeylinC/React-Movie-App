@@ -33,11 +33,6 @@ const nextQuery = async (sort: ISortSelector) => {
     return await getDocs(batch);
 }
 
-const searchQuery = async (search: string) => {
-    const batch = query(moviesRef, orderBy("name"), where("name", ">=", search), where("name", "<=", search + "\uf8ff"));
-    return await getDocs(batch);
-}
-
 const getMovieList = async () => {
     const movies : IMovie[] = [];
     const querySnapshot = await getDocs(moviesRef);
@@ -73,4 +68,4 @@ const uploadMovie = async (movie: {name: string, imdb: number, year: number, pos
     await setDoc(doc(moviesRef), movie);
 }
 
-export { getData, firstQuery, nextQuery, searchQuery, getMovieList, updateMovie, deleteMovie, uploadMovie };
+export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Homepage.css';
 import Selector from '../../components/selector/Selector';
 import MovieCardSection from '../../components/movie-card-section/MovieCardSection';
-import {nextQuery, getData, firstQuery, searchQuery} from '../../service/Post';
+import {nextQuery, getData, firstQuery} from '../../service/Post';
 import { useMoviesStore } from '../../state/Movies';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ISortSelector } from '../../interface/ISortSelector';
@@ -68,20 +68,9 @@ function Homepage() {
       getFirstMovieData();
       setHasMore(true);
     }
-    else{
-      searchMovie(currentParams.search);
-    }
   }, [searchParams])
   
   useEffect(() => setSearchParams({filter: filter, sort: sort.sort, order: sort.order}), [filter]);
-
-  const searchMovie = async (search: string) => {
-    clearMovies();
-    if(search.length !== 0){
-      const movieList = await getData(await searchQuery(search), "name");
-      movieList.forEach((movie) => addMovie(movie));
-    }
-  }
 
   return (
     <div className="Homepage">
@@ -160,7 +149,7 @@ function Homepage() {
       </InfiniteScroll>
         </>
       :
-      <MovieCardSection filter='all'/>
+      <MovieCardSection filter='all' search={currentParams.search} />
       }
     </div>
   );

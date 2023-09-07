@@ -5,14 +5,16 @@ import { useMoviesStore } from '../../state/Movies';
 
 interface IProp{
   filter: string;
+  search ?: string;
 }
 
-function MovieCardSection({ filter } : IProp) {
+function MovieCardSection({ filter, search } : IProp,) {
   const moviesList = useMoviesStore((state) => state.movies)
   return (
     <div className="movie-card-section">
       <div className="movie-card-list">
           {
+            !search ?
             filter === "all" ?
             moviesList.map((movie) => {
               return(
@@ -29,6 +31,15 @@ function MovieCardSection({ filter } : IProp) {
                   key={movie.id}
                 />
             )
+          :
+            moviesList.filter(movie => movie.name.includes(search)).map((movie) => {
+              return(
+                <MovieCard
+                  movie={movie}
+                  key={movie.id}
+                />
+              )
+            })
           }
       </div>
     </div>
