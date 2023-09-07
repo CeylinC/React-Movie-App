@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, InputNumber, Popconfirm, Table, Typography, Image } from 'antd';
-import { IColumn } from '../../interface/IColumn';
-import { deleteMovie, getMovieList, updateMovie } from '../../service/Post';
+import { IColumn } from '../../../../model';
+import { deleteMovie, getMovieList, updateMovie } from '../../../../service';
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
@@ -47,27 +47,27 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
-function MovieListpage() {
+export function MovieListpage() {
   const [form] = Form.useForm();
   const [dataList, setDataList] = useState<IColumn[]>([]);
   const [editingKey, setEditingKey] = useState('');
 
   useEffect(() => {
     const getData = async () => {
-    const movieList = await getMovieList();
-    movieList.forEach((movie, index) => {
+      const movieList = await getMovieList();
+      movieList.forEach((movie, index) => {
         setDataList((prev) => {
-        return [...prev, {...movie, key: index.toString()}];
+          return [...prev, { ...movie, key: index.toString() }];
         });
-    });
+      });
     }
     getData();
-}, []);
+  }, []);
 
   const isEditing = (record: IColumn) => record.key === editingKey;
 
   const edit = (record: Partial<IColumn> & { key: React.Key }) => {
-    form.setFieldsValue({ name: '', year: '', imdb: '', categories:'', ...record });
+    form.setFieldsValue({ name: '', year: '', imdb: '', categories: '', ...record });
     setEditingKey(record.key);
   };
 
@@ -77,10 +77,10 @@ function MovieListpage() {
 
   const handleDelete = async (key: React.Key) => {
     const newData = dataList.filter((item) => {
-      if(item.key !== key){
+      if (item.key !== key) {
         return true
       }
-      else{
+      else {
         deleteMovie(item.id);
       }
     });
@@ -115,36 +115,36 @@ function MovieListpage() {
 
   const columns = [
     {
-        title: "Poster",
-        dataIndex: "poster",
-        key: "poster",
-        editable: true,
-        render: (imgUrl: string) => <Image width={100} src={imgUrl} />
-      },
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
-        editable: true
-      },
-      {
-        title: 'IMDB',
-        dataIndex: 'imdb',
-        key: 'imdb',
-        editable: true
-      },
-      {
-        title: 'Year',
-        dataIndex: 'year',
-        key: 'year',
-        editable: true
-      },
-      {
-        title: 'Category',
-        dataIndex: 'category',
-        key: 'category',
-        editable: true
-      },
+      title: "Poster",
+      dataIndex: "poster",
+      key: "poster",
+      editable: true,
+      render: (imgUrl: string) => <Image width={100} src={imgUrl} />
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      editable: true
+    },
+    {
+      title: 'IMDB',
+      dataIndex: 'imdb',
+      key: 'imdb',
+      editable: true
+    },
+    {
+      title: 'Year',
+      dataIndex: 'year',
+      key: 'year',
+      editable: true
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category',
+      editable: true
+    },
     {
       title: 'operation',
       dataIndex: 'operation',
@@ -161,12 +161,12 @@ function MovieListpage() {
           </span>
         ) : (
           <>
-          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            Edit
-          </Typography.Link>
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-            <a style={{marginLeft: "5px"}}>Delete</a>
-          </Popconfirm>
+            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+              Edit
+            </Typography.Link>
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <a style={{ marginLeft: "5px" }}>Delete</a>
+            </Popconfirm>
           </>
         );
       },
@@ -207,5 +207,3 @@ function MovieListpage() {
     </Form>
   );
 };
-
-export default MovieListpage;

@@ -1,16 +1,15 @@
 import { Button, ConfigProvider, Form, Input, theme } from "antd";
 import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import "./SignUppage.css";
-import { createUser } from "../../service/Auth";
+import { createUser } from "../../service";
 import { Link, useNavigate } from 'react-router-dom';
-import { useUserStore } from "../../state/User";
+import { useUserStore } from "../../state";
 
-function SignUppage() {
+export function SignUppage() {
     const navigate = useNavigate();
     const {setUser} = useUserStore();
 
     const onFinish = (values: { username: string, email: string, password: string, passwordConfirm: string }) => {
-        console.log('Success:', values);
         if(values.password === values.passwordConfirm){
             createUser(values.username, values.email, values.password, navigate, setUser);
         }
@@ -91,5 +90,3 @@ function SignUppage() {
         </div>
     );
 };
-
-export default SignUppage;

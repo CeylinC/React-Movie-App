@@ -1,8 +1,8 @@
 import "./Adminpage.css";
 import { Layout, Menu, theme } from 'antd';
 import { useEffect } from "react";
-import { useNavigate, Outlet, useSearchParams, useLocation } from "react-router-dom";
-import { useUserStore } from "../../state/User";
+import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useUserStore } from "../../../state";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -15,7 +15,7 @@ interface IProp{
   key: string
 }
 
-function Adminpage() {
+export function Adminpage() {
   const navigate = useNavigate();
   const {user} = useUserStore();
   const location = useLocation();
@@ -62,5 +62,3 @@ function Adminpage() {
     </Layout>
   );
 }
-
-export default Adminpage;

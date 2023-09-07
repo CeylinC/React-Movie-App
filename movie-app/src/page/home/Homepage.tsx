@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css';
-import Selector from '../../components/selector/Selector';
-import MovieCardSection from '../../components/movie-card-section/MovieCardSection';
-import {nextQuery, getData, firstQuery} from '../../service/Post';
-import { useMoviesStore } from '../../state/Movies';
+import {MovieCardSection} from '../../feature';
+import {Navbar, Selector} from '../../components';
+import {nextQuery, getData, firstQuery} from '../../service';
+import { useMoviesStore } from '../../state';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { ISortSelector } from '../../interface/ISortSelector';
+import { ISortSelector } from '../../model';
 import { useSearchParams } from 'react-router-dom';
-import Navbar from '../../components/navbar/Navbar';
 
-function Homepage() {
+export function Homepage() {
   const [searchParams, setSearchParams] = useSearchParams();
   let currentParams = Object.fromEntries([...searchParams]);
   const { movies, addMovie, clearMovies } = useMoviesStore();
@@ -154,5 +153,3 @@ function Homepage() {
     </div>
   );
 }
-
-export default Homepage;

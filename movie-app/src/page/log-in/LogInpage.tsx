@@ -1,16 +1,15 @@
 import { Button, ConfigProvider, Form, Input, theme } from "antd";
 import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import "./LogInpage.css";
-import { loginUser } from "../../service/Auth";
+import { loginUser } from "../../service";
 import { Link, useNavigate } from "react-router-dom";
-import { useUserStore } from "../../state/User";
+import { useUserStore } from "../../state";
 
-function LogInpage() {
+export function LogInpage() {
     const navigate = useNavigate();
     const { setUser } = useUserStore();
 
     const onFinish = (values: {email: string, password: string}) => {
-        console.log('Success:', values);
         loginUser(values.email, values.password, navigate, setUser);
     };
 
@@ -77,5 +76,3 @@ function LogInpage() {
         </div>
     );
 };
-
-export default LogInpage;

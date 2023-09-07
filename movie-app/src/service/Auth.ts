@@ -1,9 +1,9 @@
 import { User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../util/firebase";
 import { NavigateFunction } from "react-router-dom";
-import { ErrorCode } from "../enum/Error";
+import { ErrorCode } from "../model/enum/Error";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { IUser } from "../interface/IUser";
+import { IUser } from "../model/interface/IUser";
 
 let user: User;
 
