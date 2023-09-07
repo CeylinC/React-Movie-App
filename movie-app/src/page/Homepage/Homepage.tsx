@@ -63,7 +63,7 @@ function Homepage() {
 
   useEffect(() => {
     currentParams = Object.fromEntries([...searchParams]);
-    if(currentParams.search === undefined){
+    if(!currentParams.search && currentParams.filter){
       clearMovies();
       getFirstMovieData();
       setHasMore(true);
