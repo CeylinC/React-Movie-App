@@ -7,12 +7,12 @@ import { IUser } from "../model/interface/IUser";
 
 let user: User;
 
-const createUser = (username: string, email: string, password: string, navigate: NavigateFunction, setUser: (user: IUser) => void) => {
+const createUser = (username: string, email: string, password: string, navigate: NavigateFunction) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             user = userCredential.user;
-            setUserData({username: username, email: user.email ? user.email : "", favoriteMovies: []}, user.uid, navigate);
+            setUserData({username: username, email: user.email ? user.email : "", favoriteMovies: [], userId: user.uid}, navigate);
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -36,12 +36,12 @@ const createUser = (username: string, email: string, password: string, navigate:
         });
 }
 
-const loginUser = (email: string, password: string, navigate: NavigateFunction, setUser: (user: IUser) => void) => {
+const loginUser = (email: string, password: string, navigate: NavigateFunction) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in 
             user = userCredential.user;
-            getUserData(user.uid, setUser, navigate);
+            getUserData(user.uid, navigate);
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -64,21 +64,18 @@ const loginUser = (email: string, password: string, navigate: NavigateFunction, 
             }
         });
 }
-const getUserData = async (userId: string, setUser: (user: IUser) => void, navigate: NavigateFunction) => {
+const getUserData = async (userId: string, navigate: NavigateFunction) => {
     const docRef = doc(db, "users", userId);
     const docSnap =  await getDoc(docRef);
     const userData = docSnap.data();
     if(userData){
-        sessionStorage.setItem("user", JSON.stringify({username: userData.username, email: userData.email, favoriteMovies: userData.favoriteMovies}));
+        sessionStorage.setItem("user", JSON.stringify({username: userData.username, email: userData.email, favoriteMovies: userData.favoriteMovies, userId: userId}));
         navigate("/admin/movie-list");
-    }
-    else{
-        console.log("Hata, user state düzenlenemedi");
     }
 }
 
-const setUserData = async (user: IUser, userId: string, navigate: NavigateFunction) => {
-    const docRef = doc(db, "users", userId);
+const setUserData = async (user: IUser, navigate: NavigateFunction) => {
+    const docRef = doc(db, "users", user.userId);
     await setDoc(docRef, user);
     sessionStorage.setItem("user", JSON.stringify(user));
     navigate("/admin/movie-list");

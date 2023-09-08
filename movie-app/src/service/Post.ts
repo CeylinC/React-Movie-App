@@ -1,6 +1,6 @@
 import { query, orderBy, limit, QuerySnapshot, setDoc, doc, getDocs, startAfter, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { moviesRef, db } from "../util/firebase";
-import { ISortSelector, IColumn, IMovie } from "../model";
+import { ISortSelector, IColumn, IMovie, IUser } from "../model";
 
 let lastKey = "";
 
@@ -81,4 +81,9 @@ const getMovie = async (id: string) => {
     }
 }
 
-export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie, getMovie };
+const updateFavoriteMovies = async (user:IUser) => {
+    await updateDoc(doc(db, "users", user.userId), {favoriteMovies: user.favoriteMovies, email: user.email, username: user.username});
+    console.log("b")
+}
+
+export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie, getMovie, updateFavoriteMovies };

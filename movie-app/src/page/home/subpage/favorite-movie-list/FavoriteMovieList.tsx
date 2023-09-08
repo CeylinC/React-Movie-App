@@ -6,7 +6,7 @@ import { getUser } from "../../../../util";
 import { getMovie } from "../../../../service";
 
 export function FavoriteMovieList() {
-    const {movies, addMovie, clearMovies} = useMoviesStore();
+    const {addMovie, clearMovies} = useMoviesStore();
     const user: IUser = getUser();
 
     const findFavoriteMovies = () => {
@@ -15,7 +15,6 @@ export function FavoriteMovieList() {
             user.favoriteMovies.forEach(async (movieId) => {
                 let movie = await getMovie(movieId);
                 if(movie){
-                    console.log(movie);
                     addMovie(movie);
                 }
             })
