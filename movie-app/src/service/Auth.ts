@@ -12,7 +12,7 @@ const createUser = (username: string, email: string, password: string, navigate:
         .then((userCredential) => {
             // Signed in 
             user = userCredential.user;
-            setUserData(setUser, {username: username, email: user.email ? user.email : "", favoriteMovies: []}, user.uid, navigate);
+            setUserData({username: username, email: user.email ? user.email : "", favoriteMovies: []}, user.uid, navigate);
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -68,9 +68,8 @@ const getUserData = async (userId: string, setUser: (user: IUser) => void, navig
     const docRef = doc(db, "users", userId);
     const docSnap =  await getDoc(docRef);
     const userData = docSnap.data();
-    console.log(userData);
     if(userData){
-        setUser({username: userData.displayname, email: userData.email, favoriteMovies: userData.favoriteMovies})
+        sessionStorage.setItem("user", JSON.stringify({username: userData.username, email: userData.email, favoriteMovies: userData.favoriteMovies}));
         navigate("/admin/movie-list");
     }
     else{
@@ -78,10 +77,10 @@ const getUserData = async (userId: string, setUser: (user: IUser) => void, navig
     }
 }
 
-const setUserData = async (setUser: (user: IUser) => void, user: IUser, userId: string, navigate: NavigateFunction) => {
+const setUserData = async (user: IUser, userId: string, navigate: NavigateFunction) => {
     const docRef = doc(db, "users", userId);
     await setDoc(docRef, user);
-    setUser(user);
+    sessionStorage.setItem("user", JSON.stringify(user));
     navigate("/admin/movie-list");
 }
 

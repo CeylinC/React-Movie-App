@@ -2,12 +2,14 @@ import "./Navbar.css";
 import { Button, Tooltip, Avatar, ConfigProvider, theme } from "antd";
 import Search from "antd/es/input/Search";
 import { HeartFilled, UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 interface IProp {
   setSearchParam: ({ search }: { search: string }) => void,
+  username: string,
 }
 
-export function Navbar({ setSearchParam }: IProp) {
+export function Navbar({ setSearchParam, username }: IProp) {
   return (
     <div className="navbar">
       <div id="logo">M<span>O</span>W</div>
@@ -25,16 +27,18 @@ export function Navbar({ setSearchParam }: IProp) {
       </div>
       <div className="navbar-group">
         <div id="favorite-button">
-          <Tooltip title="Favorite Movie">
-            <Button className="button" shape="circle" icon={<HeartFilled />} />
-          </Tooltip>
+          <Link to="/favorite">
+            <Tooltip title="Favorite Movie">
+              <Button className="button" shape="circle" icon={<HeartFilled />} />
+            </Tooltip>
+          </Link>
         </div>
         <div id="user">
           <Avatar icon={<UserOutlined />} />
           <div className="greeting">
             Hello
             <div className="user-name">
-              Ceylin Çaltepe
+              {username === "" ? "There!" : username}
             </div>
           </div>
         </div>

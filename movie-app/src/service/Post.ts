@@ -1,11 +1,11 @@
-import { query, orderBy, limit, QuerySnapshot, setDoc, doc, getDocs, startAfter, updateDoc, deleteDoc, getDoc } from "firebase/firestore"; 
+import { query, orderBy, limit, QuerySnapshot, setDoc, doc, getDocs, startAfter, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { moviesRef, db } from "../util/firebase";
 import { ISortSelector, IColumn, IMovie } from "../model";
 
 let lastKey = "";
 
-const getData = async (query : QuerySnapshot, sortType: string) => {
-    const movies : IMovie[] = [];
+const getData = async (query: QuerySnapshot, sortType: string) => {
+    const movies: IMovie[] = [];
     query.forEach((doc) => {
         movies.push({
             id: doc.id ?? "null",
@@ -32,7 +32,7 @@ const nextQuery = async (sort: ISortSelector) => {
 }
 
 const getMovieList = async () => {
-    const movies : IMovie[] = [];
+    const movies: IMovie[] = [];
     const querySnapshot = await getDocs(moviesRef);
     querySnapshot.forEach((doc) => {
         movies.push({
@@ -62,22 +62,22 @@ const deleteMovie = async (movieId: string) => {
     await deleteDoc(doc(db, "movies", movieId));
 }
 
-const uploadMovie = async (movie: {name: string, imdb: number, year: number, poster: string, category: string}) => {
+const uploadMovie = async (movie: { name: string, imdb: number, year: number, poster: string, category: string }) => {
     await setDoc(doc(moviesRef), movie);
 }
 
 const getMovie = async (id: string) => {
     const docSnap = await getDoc(doc(db, "movies", id));
     const movie = docSnap.data();
-    if(movie){
+    if (movie) {
         return {
             id: docSnap.id ?? "null",
-                name: movie.name ?? "İsimsiz Film",
-                poster: movie.poster ?? "",
-                year: movie.year ?? 0,
-                imdb: movie.imdb ?? 0.0,
-                category: movie.category ?? ""
-    }
+            name: movie.name ?? "İsimsiz Film",
+            poster: movie.poster ?? "",
+            year: movie.year ?? 0,
+            imdb: movie.imdb ?? 0.0,
+            category: movie.category ?? ""
+        }
     }
 }
 

@@ -32,6 +32,7 @@ export function HomepageMovieList() {
             let movieList = await getData(await firstQuery(sort), sort.sort);
             movieList.forEach(movie => addMovie(movie));
         }
+        clearMovies();
         getMovieData();
     }
 
@@ -63,7 +64,6 @@ export function HomepageMovieList() {
     useEffect(() => {
         currentParams = Object.fromEntries([...searchParams]);
         if (!currentParams.search && currentParams.filter) {
-            clearMovies();
             getFirstMovieData();
             setHasMore(true);
         }
