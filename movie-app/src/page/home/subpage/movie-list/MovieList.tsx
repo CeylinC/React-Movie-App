@@ -6,6 +6,7 @@ import { firstQuery, getData, nextQuery } from "../../../../service";
 import { useSearchParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieCardSection } from "../../../../feature";
+import "./MovieList.css";
 
 export function HomepageMovieList() {
     const [searchParams, setSearchParams] = useSearchParams();

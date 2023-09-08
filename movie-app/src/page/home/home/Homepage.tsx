@@ -1,5 +1,5 @@
 import './Homepage.css';
-import {Navbar, Selector} from '../../../components';
+import {Navbar} from '../../../components';
 import { Outlet, useSearchParams } from 'react-router-dom';
 
 export function Homepage() {
