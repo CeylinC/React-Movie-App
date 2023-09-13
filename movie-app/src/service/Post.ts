@@ -1,8 +1,6 @@
-import { query, orderBy, limit, QuerySnapshot, where, setDoc, doc, getDocs, startAfter, updateDoc, deleteDoc } from "firebase/firestore"; 
-import { IMovie } from "../model/interface/IMovie";
+import { query, orderBy, limit, QuerySnapshot, setDoc, doc, getDocs, startAfter, updateDoc, deleteDoc, getDoc } from "firebase/firestore"; 
 import { moviesRef, db } from "../util/firebase";
-import { ISortSelector } from "../model/interface/ISortSelector";
-import { IColumn } from "../model/interface/IColumn";
+import { ISortSelector, IColumn, IMovie } from "../model";
 
 let lastKey = "";
 
@@ -68,4 +66,19 @@ const uploadMovie = async (movie: {name: string, imdb: number, year: number, pos
     await setDoc(doc(moviesRef), movie);
 }
 
-export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie };
+const getMovie = async (id: string) => {
+    const docSnap = await getDoc(doc(db, "movies", id));
+    const movie = docSnap.data();
+    if(movie){
+        return {
+            id: docSnap.id ?? "null",
+                name: movie.name ?? "İsimsiz Film",
+                poster: movie.poster ?? "",
+                year: movie.year ?? 0,
+                imdb: movie.imdb ?? 0.0,
+                category: movie.category ?? ""
+    }
+    }
+}
+
+export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie, getMovie };

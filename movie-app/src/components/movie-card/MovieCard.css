@@ -3,6 +3,7 @@
     cursor: pointer;
     transition: all 0.5s ease-in-out;
     display: inline-block;
+    text-decoration: none;
 }
 .movie-card:hover{
     scale: 1.05;

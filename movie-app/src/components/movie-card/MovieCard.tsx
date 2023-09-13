@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { IMovie } from "../../model";
 import "./MovieCard.css";
 import { Card, ConfigProvider, theme } from "antd";
@@ -7,9 +8,9 @@ interface IProp{
   movie : IMovie
 }
 
-export function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
+export function MovieCard({ movie } : IProp) {
   return (
-    <div className="movie-card" title={name}>
+    <Link to={`/movie?id=${movie.id}`} className="movie-card" title={movie.name}>
       <ConfigProvider
         theme={{
           algorithm: theme.darkAlgorithm,
@@ -25,20 +26,20 @@ export function MovieCard({ movie : {name, year, imdb, poster} } : IProp) {
         }}
       >
         <div className="imdb">
-          {imdb}
+          {movie.imdb}
         </div>
         <Card
         bordered={false}
         cover={
           <img
             alt="Movie Poster"
-            src={poster}
+            src={movie.poster}
           />
         }
       >
-        <Meta title={name} description={year} />
+        <Meta title={movie.name} description={movie.year} />
       </Card>
       </ConfigProvider>
-    </div>
+    </Link>
   );
 }
