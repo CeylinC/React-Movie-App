@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import { LogInpage, Homepage, Adminpage, MovieListpage, AddMoviepage, SignUppage, MovieDetail, HomepageMovieList } from './page';
+import * as page from './page';
 
 function App() {
 
@@ -8,16 +8,17 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' element={<Homepage />} >
-            <Route path='/movie' element={<MovieDetail />}/>
-            <Route path='/' element={<HomepageMovieList />}/>
+          <Route path='/' element={<page.Homepage />} >
+            <Route path='/favorite' element={<page.FavoriteMovieList />}/>
+            <Route path='/movie' element={<page.MovieDetail />}/>
+            <Route path='/' element={<page.HomepageMovieList />}/>
           </Route>
-          <Route path='/admin' element={<Adminpage />}>
-            <Route path="/admin/movie-list" element={<MovieListpage />} />
-            <Route path="/admin/add-movie" element={<AddMoviepage />} />
+          <Route path='/admin' element={<page.Adminpage />}>
+            <Route path="/admin/movie-list" element={<page.MovieListpage />} />
+            <Route path="/admin/add-movie" element={<page.AddMoviepage />} />
           </Route>
-          <Route path='/log-in' element={<LogInpage />} />
-          <Route path='/sign-up' element={<SignUppage />} />
+          <Route path='/log-in' element={<page.LogInpage />} />
+          <Route path='/sign-up' element={<page.SignUppage />} />
         </Routes>
       </Router>
     </div>

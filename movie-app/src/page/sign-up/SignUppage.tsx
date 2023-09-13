@@ -3,15 +3,13 @@ import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import "./SignUppage.css";
 import { createUser } from "../../service";
 import { Link, useNavigate } from 'react-router-dom';
-import { useUserStore } from "../../state";
 
 export function SignUppage() {
     const navigate = useNavigate();
-    const {setUser} = useUserStore();
 
     const onFinish = (values: { username: string, email: string, password: string, passwordConfirm: string }) => {
         if(values.password === values.passwordConfirm){
-            createUser(values.username, values.email, values.password, navigate, setUser);
+            createUser(values.username, values.email, values.password, navigate);
         }
         else{
             alert("Password does not equal password confirm");
