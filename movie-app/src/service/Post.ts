@@ -66,7 +66,7 @@ const uploadMovie = async (movie: { name: string, imdb: number, year: number, po
     await setDoc(doc(moviesRef), movie);
 }
 
-const getMovie = async (id: string) => {
+const getMovieData = async (id: string) => {
     const docSnap = await getDoc(doc(db, "movies", id));
     const movie = docSnap.data();
     if (movie) {
@@ -85,4 +85,4 @@ const updateFavoriteMovies = async (user:IUser) => {
     await updateDoc(doc(db, "users", user.userId), {favoriteMovies: user.favoriteMovies, email: user.email, username: user.username, role: user.role});
 }
 
-export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie, getMovie, updateFavoriteMovies };
+export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie, getMovieData, updateFavoriteMovies };

@@ -4,7 +4,8 @@ import { getUserData } from "../../service";
 
 export const useUserControl = (
   user: IUser | undefined,
-  setUser: (user: IUser) => void
+  setUser: (user: IUser) => void,
+  runLaterFunction ?: () => void,
 ) => {
   useEffect(() => {
     const getData = async () => {
@@ -15,6 +16,9 @@ export const useUserControl = (
     };
     if (!user) {
       getData();
+    }
+    if(runLaterFunction){
+      runLaterFunction();
     }
   }, []);
 };

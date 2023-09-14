@@ -6,7 +6,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateFavoriteMovies } from "../../../../service";
 import { IMovie } from "../../../../model";
-import { useFindMovie, useUserControl, useUserStore } from "../../../../hook";
+import { useUserControl, useUserStore } from "../../../../hook";
+import { findMovie } from "../../../../util";
 
 export function MovieDetail() {
   const [searchParams] = useSearchParams();
@@ -23,10 +24,12 @@ export function MovieDetail() {
   const [isfavorite, setFavorite] = useState<boolean>();
   const { user, setUser } = useUserStore();
 
-  useUserControl(user, setUser);
-  useFindMovie(user, currentParams.id, setFavorite, setMovie);
+  useUserControl(user, setUser, () =>
+    findMovie(user, currentParams.id, setFavorite, setMovie)
+  );
 
   useEffect(() => {
+    console.log(isfavorite);
     if (user) {
       if (isfavorite && !user.favoriteMovies.includes(currentParams.id)) {
         user.favoriteMovies.push(currentParams.id);
@@ -75,7 +78,7 @@ export function MovieDetail() {
               shape="circle"
               icon={<HeartFilled />}
               onClick={() => {
-                if(!user){
+                if (!user) {
                   navigate("/log-in");
                 }
                 setFavorite(!isfavorite);

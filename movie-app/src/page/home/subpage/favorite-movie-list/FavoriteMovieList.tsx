@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { MovieCardSection } from "../../../../feature";
-import { getMovie } from "../../../../service";
+import { getMovieData } from "../../../../service";
 import { useUserControl, useMoviesStore, useUserStore } from "../../../../hook";
 
 export function FavoriteMovieList() {
@@ -12,7 +12,7 @@ export function FavoriteMovieList() {
     if (user) {
       if (user.favoriteMovies.length !== 0) {
         user.favoriteMovies.forEach(async (movieId) => {
-          let movie = await getMovie(movieId);
+          let movie = await getMovieData(movieId);
           if (movie) {
             addMovie(movie);
           }
