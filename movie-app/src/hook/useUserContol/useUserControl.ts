@@ -9,10 +9,12 @@ export const useUserControl = (
   useEffect(() => {
     const getData = async () => {
       const data = await getUserData();
-      setUser(data);
+      if (data) {
+        setUser(data);
+      }
     };
     if (!user) {
       getData();
     }
-  },[]);
+  }, []);
 };

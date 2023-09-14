@@ -117,13 +117,6 @@ const getUserData = async () => {
       };
     }
   }
-  return {
-    username: "",
-    favoriteMovies: [],
-    role: "user",
-    email: "",
-    userId: "",
-  };
 };
 
 const setUserData = async (user: IUser) => {
