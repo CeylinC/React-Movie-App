@@ -1,16 +1,17 @@
 import './Homepage.css';
 import {Navbar} from '../../../components';
 import { Outlet, useSearchParams } from 'react-router-dom';
-import { IUser } from '../../../model';
-import { getUser } from '../../../util';
+import { useUserControl, useUserStore } from '../../../hook';
 
 export function Homepage() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const user: IUser = getUser();
+  const {user, setUser} = useUserStore();
+  
+  useUserControl(user, setUser);
   
   return (
     <div className="Homepage">
-      <Navbar setSearchParam={setSearchParams} username={user.username}/>
+      <Navbar setSearchParam={setSearchParams} username={user ? user.username : undefined}/>
       <Outlet/>
     </div>
   );
