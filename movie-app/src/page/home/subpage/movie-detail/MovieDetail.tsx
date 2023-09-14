@@ -50,7 +50,7 @@ export function MovieDetail() {
         user.favoriteMovies.splice(index, 1);
       }
     }
-    sessionStorage.setItem("user", JSON.stringify(user));
+    
   }, [isfavorite]);
 
   useEffect(() => {
