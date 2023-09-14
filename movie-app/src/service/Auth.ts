@@ -127,7 +127,6 @@ const setUserData = async (user: IUser) => {
     role: user.role,
     email: user.email,
   });
-  console.log(deneme);
 };
 
 export { createUser, loginUser, getUserData };

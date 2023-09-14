@@ -6,8 +6,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateFavoriteMovies } from "../../../../service";
 import { IMovie } from "../../../../model";
-import { useUserControl, useUserStore } from "../../../../hook";
-import { findMovie } from "../../../../util";
+import { useUserStore } from "../../../../hook";
+import { favoriteControl, findMovie } from "../../../../util";
 
 export function MovieDetail() {
   const [searchParams] = useSearchParams();
@@ -21,27 +21,14 @@ export function MovieDetail() {
     category: "",
     poster: "",
   });
+  const { user } = useUserStore();
   const [isfavorite, setFavorite] = useState<boolean>();
-  const { user, setUser } = useUserStore();
-
-  useUserControl(user, setUser, () =>
-    findMovie(user, currentParams.id, setFavorite, setMovie)
-  );
 
   useEffect(() => {
-    console.log(isfavorite);
-    if (user) {
-      if (isfavorite && !user.favoriteMovies.includes(currentParams.id)) {
-        user.favoriteMovies.push(currentParams.id);
-      } else if (
-        !isfavorite &&
-        user.favoriteMovies.includes(currentParams.id)
-      ) {
-        const index = user.favoriteMovies.indexOf(currentParams.id);
-        user.favoriteMovies.splice(index, 1);
-      }
+    if(user){
+      favoriteControl(user, currentParams.id, setFavorite);
     }
-  }, [isfavorite]);
+  },[user])
 
   useEffect(() => {
     const updateData = async () => {
@@ -51,8 +38,23 @@ export function MovieDetail() {
         }
       }
     };
-    updateData();
-  }, [user]);
+    if (user && isfavorite !== undefined) {
+      if (isfavorite && !user.favoriteMovies.includes(currentParams.id)) {
+        user.favoriteMovies.push(currentParams.id);
+      } else if (
+        !isfavorite &&
+        user.favoriteMovies.includes(currentParams.id)
+      ) {
+        const index = user.favoriteMovies.indexOf(currentParams.id);
+        user.favoriteMovies.splice(index, 1);
+      }
+      updateData();
+    }
+  }, [isfavorite]);
+
+  useEffect(() => {
+    findMovie(currentParams.id, setMovie);
+  },[]);
 
   return (
     <div

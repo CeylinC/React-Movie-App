@@ -1,11 +1,8 @@
-import { IMovie, IUser } from "../model";
+import { IMovie } from "../model";
 import { getMovieData } from "../service";
-import { favoriteControl } from "./favoriteControl";
 
 export const findMovie = (
-  user: IUser | undefined,
   movieID: string,
-  setFavorite: (isFavorite: boolean) => void,
   setMovie: (movie: IMovie) => void
 ) => {
   const getMovie = async () => {
@@ -15,5 +12,4 @@ export const findMovie = (
     }
   };
   getMovie();
-  favoriteControl(user, movieID, setFavorite);
 };
