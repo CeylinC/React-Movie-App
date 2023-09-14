@@ -8,14 +8,14 @@ const getData = async (query: QuerySnapshot, sortType: string) => {
     const movies: IMovie[] = [];
     query.forEach((doc) => {
         movies.push({
-            id: doc.id ?? "null",
-            name: doc.data().name ?? "İsimsiz Film",
+            id: doc.id ?? "",
+            name: doc.data().name ?? "",
             poster: doc.data().poster ?? "",
             year: doc.data().year ?? 0,
             imdb: doc.data().imdb ?? 0.0,
             category: doc.data().category ?? ""
         });
-        lastKey = doc.data()[sortType]; //Yıl ile sıranırken hata yaşanmaz mı?
+        lastKey = doc.data()[sortType];
     })
     return movies;
 }
@@ -36,8 +36,8 @@ const getMovieList = async () => {
     const querySnapshot = await getDocs(moviesRef);
     querySnapshot.forEach((doc) => {
         movies.push({
-            id: doc.id ?? "null",
-            name: doc.data().name ?? "İsimsiz Film",
+            id: doc.id ?? "",
+            name: doc.data().name ?? "",
             poster: doc.data().poster ?? "",
             year: doc.data().year ?? 0,
             imdb: doc.data().imdb ?? 0.0,
@@ -71,8 +71,8 @@ const getMovie = async (id: string) => {
     const movie = docSnap.data();
     if (movie) {
         return {
-            id: docSnap.id ?? "null",
-            name: movie.name ?? "İsimsiz Film",
+            id: docSnap.id ?? "",
+            name: movie.name ?? "",
             poster: movie.poster ?? "",
             year: movie.year ?? 0,
             imdb: movie.imdb ?? 0.0,
@@ -82,8 +82,7 @@ const getMovie = async (id: string) => {
 }
 
 const updateFavoriteMovies = async (user:IUser) => {
-    await updateDoc(doc(db, "users", user.userId), {favoriteMovies: user.favoriteMovies, email: user.email, username: user.username});
-    console.log("b")
+    await updateDoc(doc(db, "users", user.userId), {favoriteMovies: user.favoriteMovies, email: user.email, username: user.username, role: user.role});
 }
 
 export { getData, firstQuery, nextQuery, getMovieList, updateMovie, deleteMovie, uploadMovie, getMovie, updateFavoriteMovies };

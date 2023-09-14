@@ -2,17 +2,15 @@ import { Button, Tooltip, Image } from "antd";
 import "./MovieDetail.css";
 import { HeartFilled } from "@ant-design/icons";
 import { CustomIcon } from "../../../../components";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  getMovie,
-  updateFavoriteMovies,
-} from "../../../../service";
+import { updateFavoriteMovies } from "../../../../service";
 import { IMovie } from "../../../../model";
-import { useUserControl, useUserStore } from "../../../../hook";
+import { useFindMovie, useUserControl, useUserStore } from "../../../../hook";
 
 export function MovieDetail() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const currentParams = Object.fromEntries([...searchParams]);
   const [movie, setMovie] = useState<IMovie>({
     id: "",
@@ -26,17 +24,7 @@ export function MovieDetail() {
   const { user, setUser } = useUserStore();
 
   useUserControl(user, setUser);
-
-  useEffect(() => {
-    const findMovie = async () => {
-      const movieData = await getMovie(currentParams.id);
-      if (movieData) {
-        setMovie(movieData);
-      }
-    };
-    findMovie();
-    favoriteControl();
-  }, []);
+  useFindMovie(user, currentParams.id, setFavorite, setMovie);
 
   useEffect(() => {
     if (user) {
@@ -50,7 +38,6 @@ export function MovieDetail() {
         user.favoriteMovies.splice(index, 1);
       }
     }
-    
   }, [isfavorite]);
 
   useEffect(() => {
@@ -63,19 +50,6 @@ export function MovieDetail() {
     };
     updateData();
   }, [user]);
-
-  const favoriteControl = () => {
-    if (user) {
-      if (user.favoriteMovies.length !== 0) {
-        user.favoriteMovies.forEach((movieId) => {
-          if (movieId === currentParams.id) {
-            setFavorite(true);
-            return;
-          }
-        });
-      }
-    }
-  };
 
   return (
     <div
@@ -100,7 +74,12 @@ export function MovieDetail() {
               ghost={isfavorite}
               shape="circle"
               icon={<HeartFilled />}
-              onClick={() => setFavorite(!isfavorite)}
+              onClick={() => {
+                if(!user){
+                  navigate("/log-in");
+                }
+                setFavorite(!isfavorite);
+              }}
             />
           </Tooltip>
         </div>
