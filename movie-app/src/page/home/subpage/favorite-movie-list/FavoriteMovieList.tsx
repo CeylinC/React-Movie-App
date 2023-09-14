@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { MovieCardSection } from "../../../../feature";
 import { getMovieData } from "../../../../service";
-import { useUserControl, useMoviesStore, useUserStore } from "../../../../hook";
+import { useMoviesStore, useUserStore } from "../../../../hook";
 
 export function FavoriteMovieList() {
   const { addMovie, clearMovies } = useMoviesStore();
-  const { user, setUser } = useUserStore();
+  const { user } = useUserStore();
 
   const findFavoriteMovies = () => {
     clearMovies();
@@ -21,15 +21,15 @@ export function FavoriteMovieList() {
     }
   };
 
-  useUserControl(user, setUser);
-
   useEffect(() => {
-    findFavoriteMovies();
-  }, []);
+    if (user) {
+      findFavoriteMovies();
+    }
+  }, [user]);
 
   return (
-    <div className="favorite-movie-list">
-      {<MovieCardSection filter="all" />}
+    <div className="movie-list">
+      <MovieCardSection filter="all" />
     </div>
   );
 }
