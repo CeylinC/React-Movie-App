@@ -4,11 +4,14 @@ import "./LogInpage.css";
 import { loginUser } from "../../service";
 import { Link, useNavigate } from "react-router-dom";
 import { Logo } from "../../components";
+import { useUserStore } from "../../hook";
 
 export function LogInpage() {
     const navigate = useNavigate();
+    const {clearUser} = useUserStore();
 
     const onFinish = (values: {email: string, password: string}) => {
+        clearUser();
         loginUser(values.email, values.password, navigate);
     };
 

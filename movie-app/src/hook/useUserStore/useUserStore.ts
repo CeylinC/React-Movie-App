@@ -5,6 +5,7 @@ interface UserState {
     user: IUser | undefined;
     setUser: (user: IUser) => void;
     setFavoriteMovies: (movies: string[]) => void;
+    clearUser: () => void;
 }
 
 export const useUserStore = create<UserState>((set) => ({
@@ -17,5 +18,6 @@ export const useUserStore = create<UserState>((set) => ({
             return {user: {...state.user, favoriteMovies: movies}}
         }
         return {user: undefined}
-    })
+    }),
+    clearUser: () => set({user: undefined})
 }));

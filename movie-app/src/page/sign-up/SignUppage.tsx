@@ -4,13 +4,16 @@ import "./SignUppage.css";
 import { createUser } from "../../service";
 import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from "../../components";
+import { useUserStore } from "../../hook";
 
 export function SignUppage() {
     const navigate = useNavigate();
+    const {clearUser} = useUserStore();
 
     const onFinish = (values: { username: string, email: string, password: string, passwordConfirm: string }) => {
         if(values.password === values.passwordConfirm){
             createUser(values.username, values.email, values.password, navigate);
+            clearUser();
         }
         else{
             alert("Password does not equal password confirm");

@@ -38,7 +38,7 @@ export function Adminpage() {
         navigate("/log-in");
       }
     }
-  }, []);
+  }, [user]);
 
   return (
     <Layout className="Adminpage">
