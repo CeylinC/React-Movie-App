@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 interface IProp {
   setSearchParam: ({ search }: { search: string }) => void,
-  username: string,
+  username: string | undefined,
 }
 
 export function Navbar({ setSearchParam, username }: IProp) {
@@ -38,7 +38,7 @@ export function Navbar({ setSearchParam, username }: IProp) {
           <div className="greeting">
             Hello
             <div className="user-name">
-              {username === "" ? "There!" : username}
+              {username === undefined ? "There!" : username}
             </div>
           </div>
         </div>

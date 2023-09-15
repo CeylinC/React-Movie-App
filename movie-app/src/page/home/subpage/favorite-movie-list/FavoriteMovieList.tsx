@@ -1,35 +1,35 @@
-import { useEffect, useState } from "react";
-import { useMoviesStore } from "../../../../state";
+import { useEffect } from "react";
 import { MovieCardSection } from "../../../../feature";
-import { IUser } from "../../../../model";
-import { getUser } from "../../../../util";
 import { getMovie } from "../../../../service";
+import { useUserControl, useMoviesStore, useUserStore } from "../../../../hook";
 
 export function FavoriteMovieList() {
-    const {addMovie, clearMovies} = useMoviesStore();
-    const user: IUser = getUser();
+  const { addMovie, clearMovies } = useMoviesStore();
+  const { user, setUser } = useUserStore();
 
-    const findFavoriteMovies = () => {
-        clearMovies();
-        if(user.favoriteMovies.length !== 0){
-            user.favoriteMovies.forEach(async (movieId) => {
-                let movie = await getMovie(movieId);
-                if(movie){
-                    addMovie(movie);
-                }
-            })
-        }
+  const findFavoriteMovies = () => {
+    clearMovies();
+    if (user) {
+      if (user.favoriteMovies.length !== 0) {
+        user.favoriteMovies.forEach(async (movieId) => {
+          let movie = await getMovie(movieId);
+          if (movie) {
+            addMovie(movie);
+          }
+        });
+      }
     }
+  };
 
-    useEffect(() => {
-        findFavoriteMovies();
-    },[]);
+  useUserControl(user, setUser);
 
-    return (
-        <div className="favorite-movie-list">
-            {
-                <MovieCardSection filter='all' />
-            }
-        </div>
-    );
+  useEffect(() => {
+    findFavoriteMovies();
+  }, []);
+
+  return (
+    <div className="favorite-movie-list">
+      {<MovieCardSection filter="all" />}
+    </div>
+  );
 }

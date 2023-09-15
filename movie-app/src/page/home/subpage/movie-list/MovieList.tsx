@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Selector } from "../../../../components";
-import { useMoviesStore } from "../../../../state";
+import { useMoviesStore } from "../../../../hook";
 import { ISortSelector } from "../../../../model";
 import { firstQuery, getData, nextQuery } from "../../../../service";
 import { useSearchParams } from "react-router-dom";

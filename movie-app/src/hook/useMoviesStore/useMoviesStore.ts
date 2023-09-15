@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IMovie } from "../model";
+import { IMovie } from "../../model";
 
 interface MovieState {
     movies: IMovie[];

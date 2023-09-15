@@ -1,6 +1,6 @@
 import './MovieCardSection.css';
 import { MovieCard } from '../../components';
-import { useMoviesStore } from '../../state';
+import { useMoviesStore } from '../../hook';
 
 interface IProp {
   filter: string;
