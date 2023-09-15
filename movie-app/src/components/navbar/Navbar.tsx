@@ -2,34 +2,52 @@ import "./Navbar.css";
 import { Button, Tooltip, Avatar, ConfigProvider, theme } from "antd";
 import Search from "antd/es/input/Search";
 import { HeartFilled, UserOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useSearchParams,
+} from "react-router-dom";
 
 interface IProp {
-  setSearchParam: ({ search }: { search: string }) => void,
-  username: string | undefined,
+  username: string | undefined;
 }
 
-export function Navbar({ setSearchParam, username }: IProp) {
+export function Navbar({ username }: IProp) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+
   return (
     <div className="navbar">
-      <div id="logo">M<span>O</span>W</div>
+      <div id="logo">
+        M<span>O</span>W
+      </div>
       <div id="search-box">
-        <ConfigProvider
-          theme={{
-            algorithm: theme.darkAlgorithm,
-          }}
-        >
-          <Search placeholder="Search movie..."
-            bordered={false}
-            size="large"
-            onSearch={(value: string) => (setSearchParam({ search: value.charAt(0).toUpperCase() + value.slice(1) }))} />
-        </ConfigProvider>
+        {location.pathname !== "/favorite" && (
+          <ConfigProvider
+            theme={{
+              algorithm: theme.darkAlgorithm,
+            }}
+          >
+            <Search
+              placeholder="Search movie..."
+              bordered={false}
+              size="large"
+              onSearch={(value: string) => {
+                setSearchParams({search: value})
+              }}
+            />
+          </ConfigProvider>
+        )}
       </div>
       <div className="navbar-group">
         <div id="favorite-button">
           <Link to="/favorite">
             <Tooltip title="Favorite Movie">
-              <Button className="button" shape="circle" icon={<HeartFilled />} />
+              <Button
+                className="button"
+                shape="circle"
+                icon={<HeartFilled />}
+              />
             </Tooltip>
           </Link>
         </div>

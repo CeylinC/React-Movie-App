@@ -31,7 +31,7 @@ export function MovieCardSection({ filter, search }: IProp,) {
                 />
               )
             :
-            moviesList.filter(movie => movie.name.includes(search)).map((movie) => {
+            moviesList.filter(movie => movie.name.toLowerCase().includes(search.toLowerCase())).map((movie) => {
               return (
                 <MovieCard
                   movie={movie}
