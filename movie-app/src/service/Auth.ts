@@ -121,7 +121,7 @@ const getUserData = async () => {
 
 const setUserData = async (user: IUser) => {
   const docRef = doc(db, "users", user.userId);
-  const deneme = await setDoc(docRef, {
+  await setDoc(docRef, {
     username: user.username,
     favoriteMovies: user.favoriteMovies,
     role: user.role,
