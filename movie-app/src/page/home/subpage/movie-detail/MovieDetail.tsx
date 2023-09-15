@@ -20,6 +20,12 @@ export function MovieDetail() {
     imdb: 0,
     category: "",
     poster: "",
+    description: "",
+    writers: "",
+    stars: "",
+    background: "",
+    directors: "",
+    duration: "",
   });
   const { user } = useUserStore();
   const [isfavorite, setFavorite] = useState<boolean>();

@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Form, Input, InputNumber, Popconfirm, Table, Typography, Image } from 'antd';
-import { IColumn } from '../../../../model';
-import { deleteMovie, getMovieList, updateMovie } from '../../../../service';
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Table,
+  Typography,
+  Image,
+  Descriptions,
+} from "antd";
+import { IColumn } from "../../../../model";
+import { deleteMovie, getMovieList, updateMovie } from "../../../../service";
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
   dataIndex: string;
   title: any;
-  inputType: 'number' | 'text';
+  inputType: "number" | "text";
   record: IColumn;
   index: number;
   children: React.ReactNode;
@@ -23,7 +32,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
+  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
 
   return (
     <td {...restProps}>
@@ -50,7 +59,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 export function MovieListpage() {
   const [form] = Form.useForm();
   const [dataList, setDataList] = useState<IColumn[]>([]);
-  const [editingKey, setEditingKey] = useState('');
+  const [editingKey, setEditingKey] = useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -60,27 +69,32 @@ export function MovieListpage() {
           return [...prev, { ...movie, key: index.toString() }];
         });
       });
-    }
+    };
     getData();
   }, []);
 
   const isEditing = (record: IColumn) => record.key === editingKey;
 
   const edit = (record: Partial<IColumn> & { key: React.Key }) => {
-    form.setFieldsValue({ name: '', year: '', imdb: '', categories: '', ...record });
+    form.setFieldsValue({
+      name: "",
+      year: "",
+      imdb: "",
+      categories: "",
+      ...record,
+    });
     setEditingKey(record.key);
   };
 
   const cancel = () => {
-    setEditingKey('');
+    setEditingKey("");
   };
 
   const handleDelete = async (key: React.Key) => {
     const newData = dataList.filter((item) => {
       if (item.key !== key) {
-        return true
-      }
-      else {
+        return true;
+      } else {
         deleteMovie(item.id);
       }
     });
@@ -90,7 +104,6 @@ export function MovieListpage() {
   const save = async (key: React.Key) => {
     try {
       const row = (await form.validateFields()) as IColumn;
-
       const newData = [...dataList];
       const index = newData.findIndex((item) => key === item.key);
       if (index > -1) {
@@ -101,15 +114,14 @@ export function MovieListpage() {
         });
         setDataList(newData);
         updateMovie(newData[index]);
-        setEditingKey('');
+        setEditingKey("");
       } else {
         newData.push(row);
         setDataList(newData);
-        setEditingKey('');
+        setEditingKey("");
       }
-
     } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
+      console.log("Validate Failed:", errInfo);
     }
   };
 
@@ -119,40 +131,43 @@ export function MovieListpage() {
       dataIndex: "poster",
       key: "poster",
       editable: true,
-      render: (imgUrl: string) => <Image width={100} src={imgUrl} />
+      render: (imgUrl: string) => <Image width={100} src={imgUrl} />,
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      editable: true
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+      editable: true,
     },
     {
-      title: 'IMDB',
-      dataIndex: 'imdb',
-      key: 'imdb',
-      editable: true
+      title: "IMDB",
+      dataIndex: "imdb",
+      key: "imdb",
+      editable: true,
     },
     {
-      title: 'Year',
-      dataIndex: 'year',
-      key: 'year',
-      editable: true
+      title: "Year",
+      dataIndex: "year",
+      key: "year",
+      editable: true,
     },
     {
-      title: 'Category',
-      dataIndex: 'category',
-      key: 'category',
-      editable: true
+      title: "Category",
+      dataIndex: "category",
+      key: "category",
+      editable: true,
     },
     {
-      title: 'operation',
-      dataIndex: 'operation',
+      title: "operation",
+      dataIndex: "operation",
       render: (_: any, record: IColumn) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <Typography.Link onClick={() => save(record.key)} style={{ marginRight: 8 }}>
+            <Typography.Link
+              onClick={() => save(record.key)}
+              style={{ marginRight: 8 }}
+            >
               Save
             </Typography.Link>
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
@@ -161,10 +176,16 @@ export function MovieListpage() {
           </span>
         ) : (
           <>
-            <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+            <Typography.Link
+              disabled={editingKey !== ""}
+              onClick={() => edit(record)}
+            >
               Edit
             </Typography.Link>
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => handleDelete(record.key)}
+            >
               <a style={{ marginLeft: "5px" }}>Delete</a>
             </Popconfirm>
           </>
@@ -181,7 +202,10 @@ export function MovieListpage() {
       ...col,
       onCell: (record: IColumn) => ({
         record,
-        inputType: col.dataIndex === 'year' || col.dataIndex === 'imdb' ? 'number' : 'text',
+        inputType:
+          col.dataIndex === "year" || col.dataIndex === "imdb"
+            ? "number"
+            : "text",
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -198,6 +222,141 @@ export function MovieListpage() {
           },
         }}
         bordered
+        expandable={{
+          expandedRowRender: (record) => (
+            <Descriptions
+              items={[
+                {
+                  key: "1",
+                  label: "Writers",
+                  children:
+                    editingKey === "" ? (
+                      record.writers
+                    ) : (
+                      <Form.Item
+                        name="writers"
+                        style={{ width: "80%" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: `Please movie writers!`,
+                          },
+                        ]}
+                      >
+                        <Input style={{ width: "80%" }} defaultValue={record.writers}></Input>
+                      </Form.Item>
+                    ),
+                },
+                {
+                  key: "2",
+                  label: "Directors",
+                  children:
+                    editingKey === "" ? (
+                      record.directors
+                    ) : (
+                      <Form.Item
+                        name="directors"
+                        style={{ width: "80%" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: `Please movie directors!`,
+                          },
+                        ]}
+                      >
+                        <Input style={{ width: "80%" }} defaultValue={record.directors}></Input>
+                      </Form.Item>
+                    ),
+                },
+                {
+                  key: "3",
+                  label: "Stars",
+                  children:
+                    editingKey === "" ? (
+                      record.stars
+                    ) : (
+                      <Form.Item
+                        name="stars"
+                        style={{ width: "80%" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: `Please movie stars!`,
+                          },
+                        ]}
+                      >
+                        <Input style={{ width: "80%" }} defaultValue={record.stars}></Input>
+                      </Form.Item>
+                    ),
+                },
+                {
+                  key: "4",
+                  label: "Duration",
+                  children:
+                    editingKey === "" ? (
+                      record.duration
+                    ) : (
+                      <Form.Item
+                        name="duration"
+                        style={{ width: "80%" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: `Please movie duration!`,
+                          },
+                        ]}
+                      >
+                        <Input style={{ width: "80%" }} defaultValue={record.duration}></Input>
+                      </Form.Item>
+                    ),
+                },
+                {
+                  key: "5",
+                  label: "Background",
+                  children:
+                    editingKey === "" ? (
+                      record.background
+                    ) : (
+                      <Form.Item
+                        name="background"
+                        style={{ width: "80%" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: `Please movie background!`,
+                          },
+                        ]}
+                      >
+                        <Input style={{ width: "80%" }} defaultValue={record.background}></Input>
+                      </Form.Item>
+                    ),
+                },
+                {
+                  key: "6",
+                  label: "Description",
+                  children:
+                    editingKey === "" ? (
+                      record.description
+                    ) : (
+                      <Form.Item
+                        name="description"
+                        style={{ width: "80%" }}
+                        rules={[
+                          {
+                            required: true,
+                            message: `Please movie description!`,
+                          },
+                        ]}
+                      >
+                        <Input style={{ width: "80%" }} defaultValue={record.description}></Input>
+                      </Form.Item>
+                    ),
+                },
+              ]}
+            />
+          ),
+          rowExpandable: (record) => record.name !== "Not Expandable",
+        }}
         dataSource={dataList}
         columns={mergedColumns}
         pagination={{
@@ -206,4 +365,4 @@ export function MovieListpage() {
       />
     </Form>
   );
-};
+}
