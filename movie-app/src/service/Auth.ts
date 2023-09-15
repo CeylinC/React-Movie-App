@@ -31,7 +31,7 @@ const createUser = (
             userId: user.uid,
             role: "user",
           });
-          navigate("/admin/movie-list");
+          navigate("/");
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -71,7 +71,9 @@ const loginUser = (
           user = userCredential.user;
           const userData = await getUserData();
           if (userData) {
-            navigate("/admin/movie-list");
+            userData.role === "admin"
+              ? navigate("/admin/movie-list")
+              : navigate("/");
           }
         })
         .catch((error) => {
