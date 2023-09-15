@@ -9,6 +9,12 @@
     background-repeat: no-repeat;
 }
 
+.sign-in-page #logo{
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+}
+
 .sign-in-form{
     background-color: var(--navbar-color);
     width: 50%;

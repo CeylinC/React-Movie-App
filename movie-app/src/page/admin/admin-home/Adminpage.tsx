@@ -3,6 +3,7 @@ import { Layout, Menu, theme } from "antd";
 import { useEffect } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 import { useUserControl, useUserStore } from "../../../hook";
+import { Logo } from "../../../components";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -42,7 +43,7 @@ export function Adminpage() {
   return (
     <Layout className="Adminpage">
       <Sider breakpoint="lg" collapsedWidth="0">
-        <div className="demo-logo-vertical" />
+          <div className="sidebar-logo"><Logo fontSize="2rem" /></div>
         <Menu
           theme="dark"
           mode="inline"

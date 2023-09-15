@@ -12,12 +12,6 @@
 }
 .navbar #logo{
     margin-right: 20px;
-    font-weight: bold;
-    font-size: 2rem;
-}
-.navbar #logo span{
-    color: var(--primary-color);
-    font-weight: normal;
 }
 .navbar #search-box{
     background-color: var(--input-color);
@@ -47,6 +41,7 @@
     display: inline-flex;
     flex-direction: row-reverse;
     align-items: center;
+    text-decoration: none;
 }
 #user .greeting{
     font-size: 0.7rem;
