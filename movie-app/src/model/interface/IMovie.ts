@@ -4,5 +4,11 @@ export interface IMovie{
     year: number,
     imdb: number,
     poster: string,
-    category: string
+    category: string,
+    directors: string,
+    stars: string,
+    duration: string,
+    writers: string,
+    background: string,
+    description: string,
 }
