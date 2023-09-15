@@ -7,6 +7,7 @@ import {
   useLocation,
   useSearchParams,
 } from "react-router-dom";
+import { Logo } from "../logo/Logo";
 
 interface IProp {
   username: string | undefined;
@@ -18,9 +19,7 @@ export function Navbar({ username }: IProp) {
 
   return (
     <div className="navbar">
-      <div id="logo">
-        M<span>O</span>W
-      </div>
+      <Logo fontSize="2rem"/>
       <div id="search-box">
         {location.pathname !== "/favorite" && (
           <ConfigProvider
@@ -51,7 +50,7 @@ export function Navbar({ username }: IProp) {
             </Tooltip>
           </Link>
         </div>
-        <div id="user">
+        <Link to={"/log-in"} id="user">
           <Avatar icon={<UserOutlined />} />
           <div className="greeting">
             Hello
@@ -59,7 +58,7 @@ export function Navbar({ username }: IProp) {
               {username === undefined ? "There!" : username}
             </div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

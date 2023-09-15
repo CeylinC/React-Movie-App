@@ -3,6 +3,7 @@ import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import "./LogInpage.css";
 import { loginUser } from "../../service";
 import { Link, useNavigate } from "react-router-dom";
+import { Logo } from "../../components";
 
 export function LogInpage() {
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ export function LogInpage() {
 
     return (
         <div className="sign-in-page">
+            <Logo fontSize="2rem"/>
             <ConfigProvider
                 theme={{
                     algorithm: theme.darkAlgorithm,

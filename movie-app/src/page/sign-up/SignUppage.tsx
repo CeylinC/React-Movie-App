@@ -3,6 +3,7 @@ import { LockOutlined, UserOutlined, MailOutlined } from '@ant-design/icons';
 import "./SignUppage.css";
 import { createUser } from "../../service";
 import { Link, useNavigate } from 'react-router-dom';
+import { Logo } from "../../components";
 
 export function SignUppage() {
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ export function SignUppage() {
 
     return (
         <div className="sign-up-page">
+            <Logo fontSize="2rem"/>
             <ConfigProvider
                 theme={{
                     algorithm: theme.darkAlgorithm,
