@@ -31,10 +31,10 @@ export function MovieDetail() {
   const [isfavorite, setFavorite] = useState<boolean>();
 
   useEffect(() => {
-    if(user){
+    if (user) {
       favoriteControl(user, currentParams.id, setFavorite);
     }
-  },[user])
+  }, [user]);
 
   useEffect(() => {
     const updateData = async () => {
@@ -60,14 +60,17 @@ export function MovieDetail() {
 
   useEffect(() => {
     findMovie(currentParams.id, setMovie);
-  },[]);
+  }, []);
 
   return (
     <div
       className="movie-detail"
       style={{
-        backgroundImage:
-          "linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0.5)), url('https://wallpaperset.com/w/full/6/d/3/366121.jpg')",
+        backgroundImage: `linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0.5)), url(${
+          movie.background !== ""
+            ? movie.background
+            : "https://wallpaperset.com/w/full/6/d/3/366121.jpg"
+        })`,
       }}
     >
       <div className="movie-detail-aside">
@@ -96,30 +99,31 @@ export function MovieDetail() {
         </div>
         <ul className="movie-detail-list">
           <li className="movie-detail-list-item">
-            <span>Directors</span>Lorem, ipsum.
+            <span>Directors</span>
+            {movie.directors}
           </li>
           <li className="movie-detail-list-item">
-            <span>Writers</span>Lorem ipsum dolor sit.
+            <span>Writers</span>
+            {movie.writers}
           </li>
           <li className="movie-detail-list-item">
-            <span>Stars</span>Lorem, ipsum.
+            <span>Stars</span>
+            {movie.stars}
           </li>
           <li className="movie-detail-list-item">
             <span>Year</span>
             {movie.year}
           </li>
           <li className="movie-detail-list-item">
-            <span>Duration</span>1h 23m
+            <span>Duration</span>
+            {movie.duration}
           </li>
           <li className="movie-detail-list-item">
             <span>Category</span>
             {movie.category.charAt(0).toUpperCase() + movie.category.slice(1)}
           </li>
         </ul>
-        <p className="movie-description">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis quia
-          consequatur repellat repellendus laudantium sit?
-        </p>
+        <p className="movie-description">{movie.description}</p>
       </div>
     </div>
   );
