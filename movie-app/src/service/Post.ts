@@ -10,6 +10,7 @@ import {
   updateDoc,
   deleteDoc,
   getDoc,
+  getCountFromServer,
 } from "firebase/firestore";
 import { moviesRef, db } from "../util/firebase";
 import { ISortSelector, IColumn, IMovie, IUser } from "../model";
@@ -40,7 +41,7 @@ const getData = async (query: QuerySnapshot, sortType: string) => {
 
 const firstQuery = async (sort: ISortSelector) => {
   lastKey = "";
-  const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(3));
+  const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(5));
   return await getDocs(batch);
 };
 
@@ -48,7 +49,7 @@ const nextQuery = async (sort: ISortSelector) => {
   const batch = query(
     moviesRef,
     orderBy(sort.sort, sort.order),
-    limit(3),
+    limit(5),
     startAfter(lastKey)
   );
   return await getDocs(batch);
@@ -143,6 +144,12 @@ const updateFavoriteMovies = async (user: IUser) => {
   });
 };
 
+const getMoviesCount = async () => {
+  const snapshot = await getCountFromServer(moviesRef);
+  console.log("count: ", snapshot.data().count);
+  return snapshot.data().count;
+};
+
 export {
   getData,
   firstQuery,
@@ -153,4 +160,5 @@ export {
   uploadMovie,
   getMovieData,
   updateFavoriteMovies,
+  getMoviesCount,
 };
