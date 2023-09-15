@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieCardSection } from "../../../../feature";
 import "./MovieList.css";
-import { ConfigProvider, Space, Spin } from "antd";
+import { ConfigProvider, Spin } from "antd";
 
 export function HomepageMovieList() {
   const [searchParams, setSearchParams] = useSearchParams();
