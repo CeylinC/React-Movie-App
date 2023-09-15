@@ -2,17 +2,16 @@ import { Button, Tooltip, Image } from "antd";
 import "./MovieDetail.css";
 import { HeartFilled } from "@ant-design/icons";
 import { CustomIcon } from "../../../../components";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import {
-  getMovie,
-  updateFavoriteMovies,
-} from "../../../../service";
+import { updateFavoriteMovies } from "../../../../service";
 import { IMovie } from "../../../../model";
-import { useUserControl, useUserStore } from "../../../../hook";
+import { useUserStore } from "../../../../hook";
+import { favoriteControl, findMovie } from "../../../../util";
 
 export function MovieDetail() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const currentParams = Object.fromEntries([...searchParams]);
   const [movie, setMovie] = useState<IMovie>({
     id: "",
@@ -22,36 +21,14 @@ export function MovieDetail() {
     category: "",
     poster: "",
   });
+  const { user } = useUserStore();
   const [isfavorite, setFavorite] = useState<boolean>();
-  const { user, setUser } = useUserStore();
-
-  useUserControl(user, setUser);
 
   useEffect(() => {
-    const findMovie = async () => {
-      const movieData = await getMovie(currentParams.id);
-      if (movieData) {
-        setMovie(movieData);
-      }
-    };
-    findMovie();
-    favoriteControl();
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-      if (isfavorite && !user.favoriteMovies.includes(currentParams.id)) {
-        user.favoriteMovies.push(currentParams.id);
-      } else if (
-        !isfavorite &&
-        user.favoriteMovies.includes(currentParams.id)
-      ) {
-        const index = user.favoriteMovies.indexOf(currentParams.id);
-        user.favoriteMovies.splice(index, 1);
-      }
+    if(user){
+      favoriteControl(user, currentParams.id, setFavorite);
     }
-    
-  }, [isfavorite]);
+  },[user])
 
   useEffect(() => {
     const updateData = async () => {
@@ -61,21 +38,23 @@ export function MovieDetail() {
         }
       }
     };
-    updateData();
-  }, [user]);
-
-  const favoriteControl = () => {
-    if (user) {
-      if (user.favoriteMovies.length !== 0) {
-        user.favoriteMovies.forEach((movieId) => {
-          if (movieId === currentParams.id) {
-            setFavorite(true);
-            return;
-          }
-        });
+    if (user && isfavorite !== undefined) {
+      if (isfavorite && !user.favoriteMovies.includes(currentParams.id)) {
+        user.favoriteMovies.push(currentParams.id);
+      } else if (
+        !isfavorite &&
+        user.favoriteMovies.includes(currentParams.id)
+      ) {
+        const index = user.favoriteMovies.indexOf(currentParams.id);
+        user.favoriteMovies.splice(index, 1);
       }
+      updateData();
     }
-  };
+  }, [isfavorite]);
+
+  useEffect(() => {
+    findMovie(currentParams.id, setMovie);
+  },[]);
 
   return (
     <div
@@ -100,7 +79,12 @@ export function MovieDetail() {
               ghost={isfavorite}
               shape="circle"
               icon={<HeartFilled />}
-              onClick={() => setFavorite(!isfavorite)}
+              onClick={() => {
+                if (!user) {
+                  navigate("/log-in");
+                }
+                setFavorite(!isfavorite);
+              }}
             />
           </Tooltip>
         </div>

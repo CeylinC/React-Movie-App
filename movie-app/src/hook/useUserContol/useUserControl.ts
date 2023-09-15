@@ -4,7 +4,7 @@ import { getUserData } from "../../service";
 
 export const useUserControl = (
   user: IUser | undefined,
-  setUser: (user: IUser) => void
+  setUser: (user: IUser) => void,
 ) => {
   useEffect(() => {
     const getData = async () => {
