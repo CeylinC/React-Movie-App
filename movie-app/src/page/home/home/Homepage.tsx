@@ -1,8 +1,7 @@
 import './Homepage.css';
 import {Navbar} from '../../../components';
-import { Outlet, useSearchParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { useUserControl, useUserStore } from '../../../hook';
-import { useEffect, useState } from 'react';
 
 export function Homepage() {
   const {user, setUser} = useUserStore();
