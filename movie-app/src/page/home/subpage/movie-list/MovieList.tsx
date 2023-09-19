@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Selector } from "../../../../components";
 import { useMoviesStore } from "../../../../hook";
-import { ISortSelector } from "../../../../model";
+import { Category, ISortSelector, Sort } from "../../../../model";
 import { getMoviesCount } from "../../../../service";
 import { useSearchParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieCardSection } from "../../../../feature";
 import "./MovieList.css";
 import { ConfigProvider, Spin } from "antd";
+import { capitalize } from "../../../../util";
 
 export function HomepageMovieList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,11 +18,11 @@ export function HomepageMovieList() {
     currentParams.filter !== undefined ? currentParams.filter : "all"
   );
   const [sort, setSort] = useState<ISortSelector>({
-    sort: currentParams.sort !== undefined ? currentParams.sort : "name",
+    sort: currentParams.sort !== undefined ? currentParams.sort : Sort.name,
     order:
-      currentParams.order === "asc" || currentParams.order === "desc"
+      currentParams.order === Sort.asc || currentParams.order === Sort.desc
         ? currentParams.order
-        : "asc",
+        : Sort.asc,
   });
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [moviesCount, setMoviesCount] = useState<number>(0);
@@ -29,20 +30,20 @@ export function HomepageMovieList() {
   const changeSort = (value: string) => {
     clearMovies();
     switch (value) {
-      case "az":
-        setSort({ sort: "name", order: "asc" });
+      case Sort.az:
+        setSort({ sort: Sort.name, order: Sort.asc });
         break;
-      case "za":
-        setSort({ sort: "name", order: "desc" });
+      case Sort.za:
+        setSort({ sort: Sort.name, order: Sort.desc });
         break;
-      case "latest":
-        setSort({ sort: "year", order: "desc" });
+      case Sort.latest:
+        setSort({ sort: Sort.year, order: Sort.desc });
         break;
-      case "oldest":
-        setSort({ sort: "year", order: "asc" });
+      case Sort.oldest:
+        setSort({ sort: Sort.year, order: Sort.asc });
         break;
       default:
-        setSort({ sort: "name", order: "asc" });
+        setSort({ sort: Sort.name, order: Sort.asc });
         break;
     }
   };
@@ -84,30 +85,32 @@ export function HomepageMovieList() {
                 placeholder="Sort By : "
                 options={[
                   {
-                    value: "az",
-                    label: "A - Z",
+                    value: Sort.az,
+                    label: Sort.az.toUpperCase(),
                   },
                   {
-                    value: "za",
-                    label: "Z - A",
+                    value: Sort.za,
+                    label: Sort.za.toLowerCase(),
                   },
                   {
-                    value: "latest",
-                    label: "Latest",
+                    value: Sort.latest,
+                    label:
+                      capitalize(Sort.latest)
                   },
                   {
-                    value: "oldest",
-                    label: "Oldest",
+                    value: Sort.oldest,
+                    label:
+                      capitalize(Sort.oldest),
                   },
                 ]}
                 defaultValue={
-                  sort.order === "desc"
-                    ? sort.sort === "name"
-                      ? "Z - A"
-                      : "Latest"
-                    : sort.sort === "name"
-                    ? "A - Z"
-                    : "Oldest"
+                  sort.order === Sort.desc
+                    ? sort.sort === Sort.name
+                      ? Sort.za.toUpperCase()
+                      : capitalize(Sort.latest)
+                    : sort.sort === Sort.name
+                    ? Sort.az.toUpperCase()
+                    : capitalize(Sort.oldest)
                 }
                 onChange={(value) => changeSort(value)}
               />
@@ -121,24 +124,24 @@ export function HomepageMovieList() {
                     label: "All",
                   },
                   {
-                    value: "action",
-                    label: "Action",
+                    value: Category.action,
+                    label: capitalize(Category.action),
                   },
                   {
-                    value: "comedy",
-                    label: "Comedy",
+                    value: Category.comedy,
+                    label: capitalize(Category.comedy),
                   },
                   {
-                    value: "animation",
-                    label: "Animation",
+                    value: Category.animation,
+                    label: capitalize(Category.animation),
                   },
                   {
-                    value: "horror",
-                    label: "Horror",
+                    value: Category.horror,
+                    label: capitalize(Category.horror),
                   },
                   {
-                    value: "romantic",
-                    label: "Romantic",
+                    value: Category.romantic,
+                    label: capitalize(Category.romantic),
                   },
                 ]}
                 defaultValue={filter}
