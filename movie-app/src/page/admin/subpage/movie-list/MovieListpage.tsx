@@ -8,15 +8,18 @@ import {
   Typography,
   Image,
   Descriptions,
+  Select,
 } from "antd";
-import { IColumn } from "../../../../model";
+import { Category, IColumn } from "../../../../model";
 import { deleteMovie, getMovieList, updateMovie } from "../../../../service";
+import { capitalize } from "../../../../util";
+const { Option } = Select;
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;
   dataIndex: string;
   title: any;
-  inputType: "number" | "text";
+  inputType: "number" | "text" | "select";
   record: IColumn;
   index: number;
   children: React.ReactNode;
@@ -32,7 +35,19 @@ const EditableCell: React.FC<EditableCellProps> = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+  const categories = Object.keys(Category);
+  const inputNode =
+    inputType === "number" ? (
+      <InputNumber />
+    ) : inputType === "text" ? (
+      <Input />
+    ) : (
+      <Select>
+        {categories.map((item) => (
+          <Option value={item}>{capitalize(item)}</Option>
+        ))}
+      </Select>
+    );
 
   return (
     <td {...restProps}>
@@ -205,6 +220,8 @@ export function MovieListpage() {
         inputType:
           col.dataIndex === "year" || col.dataIndex === "imdb"
             ? "number"
+            : col.dataIndex === "category"
+            ? "select"
             : "text",
         dataIndex: col.dataIndex,
         title: col.title,
@@ -243,7 +260,10 @@ export function MovieListpage() {
                           },
                         ]}
                       >
-                        <Input style={{ width: "80%" }} defaultValue={record.writers}></Input>
+                        <Input
+                          style={{ width: "80%" }}
+                          defaultValue={record.writers}
+                        ></Input>
                       </Form.Item>
                     ),
                 },
@@ -264,7 +284,10 @@ export function MovieListpage() {
                           },
                         ]}
                       >
-                        <Input style={{ width: "80%" }} defaultValue={record.directors}></Input>
+                        <Input
+                          style={{ width: "80%" }}
+                          defaultValue={record.directors}
+                        ></Input>
                       </Form.Item>
                     ),
                 },
@@ -285,7 +308,10 @@ export function MovieListpage() {
                           },
                         ]}
                       >
-                        <Input style={{ width: "80%" }} defaultValue={record.stars}></Input>
+                        <Input
+                          style={{ width: "80%" }}
+                          defaultValue={record.stars}
+                        ></Input>
                       </Form.Item>
                     ),
                 },
@@ -306,7 +332,10 @@ export function MovieListpage() {
                           },
                         ]}
                       >
-                        <Input style={{ width: "80%" }} defaultValue={record.duration}></Input>
+                        <Input
+                          style={{ width: "80%" }}
+                          defaultValue={record.duration}
+                        ></Input>
                       </Form.Item>
                     ),
                 },
@@ -327,7 +356,10 @@ export function MovieListpage() {
                           },
                         ]}
                       >
-                        <Input style={{ width: "80%" }} defaultValue={record.background}></Input>
+                        <Input
+                          style={{ width: "80%" }}
+                          defaultValue={record.background}
+                        ></Input>
                       </Form.Item>
                     ),
                 },
@@ -348,7 +380,10 @@ export function MovieListpage() {
                           },
                         ]}
                       >
-                        <Input style={{ width: "80%" }} defaultValue={record.description}></Input>
+                        <Input
+                          style={{ width: "80%" }}
+                          defaultValue={record.description}
+                        ></Input>
                       </Form.Item>
                     ),
                 },

@@ -1,6 +1,8 @@
 import { Button, Form, Input, Select, Image } from "antd";
 import { useState } from "react";
 import { uploadMovie } from "../../../../service";
+import { Category } from "../../../../model";
+import { capitalize } from "../../../../util";
 const { Option } = Select;
 
 type FieldType = {
@@ -19,12 +21,16 @@ type FieldType = {
 
 export function AddMoviepage() {
   const [form] = Form.useForm();
-  const [url, setUrl] = useState<{poster: string, background: string}>({poster: "", background: ""});
+  const [url, setUrl] = useState<{ poster: string; background: string }>({
+    poster: "",
+    background: "",
+  });
+  const categories = Object.keys(Category);
 
   const onFinished = (value: any) => {
     uploadMovie(value);
     form.resetFields();
-    setUrl({poster: "", background: ""});
+    setUrl({ poster: "", background: "" });
   };
 
   return (
@@ -89,7 +95,7 @@ export function AddMoviepage() {
       <Form.Item<FieldType>
         label="Duration"
         name="duration"
-        rules={[{ required: true, message: 'Please input movie duration!' }]}
+        rules={[{ required: true, message: "Please input movie duration!" }]}
       >
         <Input />
       </Form.Item>
@@ -97,7 +103,7 @@ export function AddMoviepage() {
       <Form.Item<FieldType>
         label="Description"
         name="description"
-        rules={[{ required: true, message: 'Please input movie description!' }]}
+        rules={[{ required: true, message: "Please input movie description!" }]}
       >
         <Input />
       </Form.Item>
@@ -107,36 +113,52 @@ export function AddMoviepage() {
         name="poster"
         rules={[{ required: true, message: "Please input movie poster url!" }]}
       >
-        <Input onChange={(event) => setUrl((prev) => ({...prev, poster: event.target.value}))} />
+        <Input
+          onChange={(event) =>
+            setUrl((prev) => ({ ...prev, poster: event.target.value }))
+          }
+        />
       </Form.Item>
 
       {url.poster !== "" && (
         <Form.Item style={{ display: "flex", justifyContent: "center" }}>
-          <Image width={200} src={url.poster} style={{ display: "inline-block" }} />
+          <Image
+            width={200}
+            src={url.poster}
+            style={{ display: "inline-block" }}
+          />
         </Form.Item>
       )}
 
       <Form.Item<FieldType>
         label="Background URL"
         name="background"
-        rules={[{ required: true, message: "Please input movie background url!" }]}
+        rules={[
+          { required: true, message: "Please input movie background url!" },
+        ]}
       >
-        <Input onChange={(event) => setUrl((prev) => ({...prev, background: event.target.value}))} />
+        <Input
+          onChange={(event) =>
+            setUrl((prev) => ({ ...prev, background: event.target.value }))
+          }
+        />
       </Form.Item>
 
       {url.background !== "" && (
         <Form.Item style={{ display: "flex", justifyContent: "center" }}>
-          <Image width={300} src={url.background} style={{ display: "inline-block" }} />
+          <Image
+            width={300}
+            src={url.background}
+            style={{ display: "inline-block" }}
+          />
         </Form.Item>
       )}
 
       <Form.Item name="category" label="Category" rules={[{ required: true }]}>
         <Select>
-          <Option value="action">Action</Option>
-          <Option value="animation">Animation</Option>
-          <Option value="comedy">Comedy</Option>
-          <Option value="horror">Horror</Option>
-          <Option value="romantic">Romantic</Option>
+          {categories.map((item) => (
+            <Option value={item}>{capitalize(item)}</Option>
+          ))}
         </Select>
       </Form.Item>
 
