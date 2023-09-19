@@ -39,13 +39,13 @@ const getData = async (query: QuerySnapshot, sortType: string) => {
   return movies;
 };
 
-const firstQuery = async (sort: ISortSelector) => {
+const getFirstQuery = async (sort: ISortSelector) => {
   lastKey = "";
   const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(5));
   return await getDocs(batch);
 };
 
-const nextQuery = async (sort: ISortSelector) => {
+const getNextQuery = async (sort: ISortSelector) => {
   const batch = query(
     moviesRef,
     orderBy(sort.sort, sort.order),
@@ -152,8 +152,8 @@ const getMoviesCount = async () => {
 
 export {
   getData,
-  firstQuery,
-  nextQuery,
+  getFirstQuery,
+  getNextQuery,
   getMovieList,
   updateMovie,
   deleteMovie,
