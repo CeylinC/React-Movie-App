@@ -41,7 +41,7 @@ const getData = async (query: QuerySnapshot, sortType: string) => {
 
 const getFirstQuery = async (sort: ISortSelector) => {
   lastKey = "";
-  const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(5));
+  const batch = query(moviesRef, orderBy(sort.sort, sort.order), limit(20));
   return await getDocs(batch);
 };
 
@@ -49,7 +49,7 @@ const getNextQuery = async (sort: ISortSelector) => {
   const batch = query(
     moviesRef,
     orderBy(sort.sort, sort.order),
-    limit(5),
+    limit(20),
     startAfter(lastKey)
   );
   return await getDocs(batch);
