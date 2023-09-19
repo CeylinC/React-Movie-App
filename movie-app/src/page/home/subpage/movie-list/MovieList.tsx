@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import { Selector } from "../../../../components";
 import { useMoviesStore } from "../../../../hook";
 import { ISortSelector } from "../../../../model";
-import {
-  firstQuery,
-  getData,
-  getMoviesCount,
-  nextQuery,
-} from "../../../../service";
+import { getMoviesCount } from "../../../../service";
 import { useSearchParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieCardSection } from "../../../../feature";
@@ -17,7 +12,7 @@ import { ConfigProvider, Spin } from "antd";
 export function HomepageMovieList() {
   const [searchParams, setSearchParams] = useSearchParams();
   let currentParams = Object.fromEntries([...searchParams]);
-  const { movies, addMovie, clearMovies } = useMoviesStore();
+  const { movies, clearMovies, fetchMoreData, getFirstData } = useMoviesStore();
   const [filter, setFilter] = useState<string>(
     currentParams.filter !== undefined ? currentParams.filter : "all"
   );
@@ -30,26 +25,6 @@ export function HomepageMovieList() {
   });
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [moviesCount, setMoviesCount] = useState<number>(0);
-
-  const fetchMoreData = () => {
-    const getMovieData = async () => {
-      let movieData = await getData(await nextQuery(sort), sort.sort);
-      movieData.forEach((data) => addMovie(data));
-    };
-    getMovieData();
-    if (movies.length >= moviesCount) {
-      setHasMore(false);
-    }
-  };
-
-  const getFirstMovieData = () => {
-    const getMovieData = async () => {
-      let movieList = await getData(await firstQuery(sort), sort.sort);
-      movieList.forEach((movie) => addMovie(movie));
-    };
-    clearMovies();
-    getMovieData();
-  };
 
   const changeSort = (value: string) => {
     clearMovies();
@@ -87,7 +62,8 @@ export function HomepageMovieList() {
   useEffect(() => {
     currentParams = Object.fromEntries([...searchParams]);
     if (!currentParams.search && currentParams.filter) {
-      getFirstMovieData();
+      clearMovies();
+      getFirstData(sort);
       setHasMore(true);
     }
   }, [searchParams]);
@@ -173,7 +149,7 @@ export function HomepageMovieList() {
           <InfiniteScroll
             style={{ overflow: "hidden" }}
             dataLength={movies.length}
-            next={fetchMoreData}
+            next={() => fetchMoreData(sort, moviesCount, setHasMore)}
             hasMore={hasMore}
             loader={
               <div className="spin">
