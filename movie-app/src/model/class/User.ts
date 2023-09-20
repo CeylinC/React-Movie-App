@@ -9,7 +9,7 @@ export class User implements IUser{
 
     constructor(data?: any){
         this.email =  data?.email || ""
-        this.username =  data?.email || ""
+        this.username =  data?.username || ""
         this.favoriteMovies =  data?.favoriteMovies || []
         this.userId =  data?.userId || ""
         this.role =  data?.role || "user"

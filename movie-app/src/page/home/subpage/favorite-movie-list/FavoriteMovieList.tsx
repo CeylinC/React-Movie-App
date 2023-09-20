@@ -3,7 +3,7 @@ import { MovieCardSection } from "../../../../feature";
 import { useMoviesStore, useUserStore } from "../../../../hook";
 import { useNavigate } from "react-router-dom";
 
-export function FavoriteMovieList() {
+export default function FavoriteMovieList() {
   const { getUserFavoriteMovies, clearMovies } = useMoviesStore();
   const { user } = useUserStore();
   const navigate = useNavigate();

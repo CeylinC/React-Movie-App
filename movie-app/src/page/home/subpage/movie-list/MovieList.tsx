@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Selector } from "../../../../components";
+import { Loading, Selector } from "../../../../components";
 import { useMoviesStore } from "../../../../hook";
 import { Category, ISortSelector, Sort } from "../../../../model";
 import { getMoviesCount } from "../../../../service";
@@ -7,10 +7,9 @@ import { useSearchParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { MovieCardSection } from "../../../../feature";
 import "./MovieList.css";
-import { ConfigProvider, Spin } from "antd";
 import { capitalize } from "../../../../util";
 
-export function HomepageMovieList() {
+export default function HomepageMovieList() {
   const [searchParams, setSearchParams] = useSearchParams();
   let currentParams = Object.fromEntries([...searchParams]);
   const { movies, clearMovies, fetchMoreData, getFirstData } = useMoviesStore();
@@ -154,19 +153,7 @@ export function HomepageMovieList() {
             dataLength={movies.length}
             next={() => fetchMoreData(sort, moviesCount, setHasMore)}
             hasMore={hasMore}
-            loader={
-              <div className="spin">
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      colorPrimary: "#FFD369",
-                    },
-                  }}
-                >
-                  <Spin size="large" />
-                </ConfigProvider>
-              </div>
-            }
+            loader={<Loading height={"200px"}/>}
             endMessage={
               <p style={{ textAlign: "center" }}>No more movies to load</p>
             }

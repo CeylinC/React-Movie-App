@@ -16,7 +16,7 @@ interface IProp {
   key: string;
 }
 
-export function Adminpage() {
+export default function Adminpage() {
   const { user, setUser } = useUserStore();
   const navigate = useNavigate();
   const location = useLocation();
