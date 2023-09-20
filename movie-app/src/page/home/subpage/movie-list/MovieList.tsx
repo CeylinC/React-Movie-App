@@ -11,16 +11,17 @@ import { capitalize } from "../../../../util";
 
 export default function HomepageMovieList() {
   const [searchParams, setSearchParams] = useSearchParams();
-  let currentParams = Object.fromEntries([...searchParams]);
   const { movies, clearMovies, fetchMoreData, getFirstData } = useMoviesStore();
   const [filter, setFilter] = useState<string>(
-    currentParams.filter !== undefined ? currentParams.filter : "all"
+    searchParams.get("filter") || "all"
   );
   const [sort, setSort] = useState<ISortSelector>({
-    sort: currentParams.sort !== undefined ? currentParams.sort : Sort.name,
+    sort: searchParams.get("sort") || Sort.name,
     order:
-      currentParams.order === Sort.asc || currentParams.order === Sort.desc
-        ? currentParams.order
+      searchParams.get("order") === null
+        ? Sort.asc
+        : searchParams.get("order") === Sort.desc
+        ? Sort.desc
         : Sort.asc,
   });
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -60,8 +61,12 @@ export default function HomepageMovieList() {
   }, [sort]);
 
   useEffect(() => {
-    currentParams = Object.fromEntries([...searchParams]);
-    if (!currentParams.search && currentParams.filter) {
+    if (
+      searchParams.get("search") === null &&
+      searchParams.get("filter") !== null &&
+      searchParams.get("order") !== null &&
+      searchParams.get("sort") !== null
+    ) {
       clearMovies();
       getFirstData(sort);
       setHasMore(true);
@@ -76,7 +81,7 @@ export default function HomepageMovieList() {
 
   return (
     <div className="movie-list">
-      {currentParams.search === undefined ? (
+      {!searchParams.get("search") ? (
         <>
           <div className="sort-filter-menu">
             <div className="sort-menu">
@@ -93,13 +98,11 @@ export default function HomepageMovieList() {
                   },
                   {
                     value: Sort.latest,
-                    label:
-                      capitalize(Sort.latest)
+                    label: capitalize(Sort.latest),
                   },
                   {
                     value: Sort.oldest,
-                    label:
-                      capitalize(Sort.oldest),
+                    label: capitalize(Sort.oldest),
                   },
                 ]}
                 defaultValue={
@@ -153,7 +156,7 @@ export default function HomepageMovieList() {
             dataLength={movies.length}
             next={() => fetchMoreData(sort, moviesCount, setHasMore)}
             hasMore={hasMore}
-            loader={<Loading height={"200px"}/>}
+            loader={<Loading height={"200px"} />}
             endMessage={
               <p style={{ textAlign: "center" }}>No more movies to load</p>
             }
@@ -162,7 +165,7 @@ export default function HomepageMovieList() {
           </InfiniteScroll>
         </>
       ) : (
-        <MovieCardSection filter="all" search={currentParams.search} />
+        <MovieCardSection filter="all" />
       )}
     </div>
   );

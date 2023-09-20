@@ -107,7 +107,6 @@ const updateFavoriteMovies = async (user: IUser) => {
 
 const getMoviesCount = async () => {
   const snapshot = await getCountFromServer(moviesRef);
-  console.log("count: ", snapshot.data().count);
   return snapshot.data().count;
 };
 
