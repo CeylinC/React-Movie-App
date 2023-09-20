@@ -10,6 +10,7 @@ import { NavigateFunction } from "react-router-dom";
 import { ErrorCode } from "../model/enum/Error";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { IUser } from "../model/interface/IUser";
+import { User as UserModel } from "../model/class/User";
 
 let user: User;
 
@@ -110,13 +111,7 @@ const getUserData = async () => {
     const docSnap = await getDoc(doc(db, "users", userId));
     const user = docSnap.data();
     if (user) {
-      return {
-        username: user.username ? user.username : "",
-        favoriteMovies: user.favoriteMovies ? user.favoriteMovies : [],
-        role: user.role ? user.role : "user",
-        email: user.email ? user.email : "",
-        userId: userId,
-      };
+      return new UserModel(user);
     }
   }
 };

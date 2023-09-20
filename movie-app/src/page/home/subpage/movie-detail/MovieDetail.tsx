@@ -5,28 +5,15 @@ import { CustomIcon } from "../../../../components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateFavoriteMovies } from "../../../../service";
-import { IMovie } from "../../../../model";
+import { IMovie, Movie } from "../../../../model";
 import { useUserStore } from "../../../../hook";
-import { favoriteControl, findMovie } from "../../../../util";
+import { capitalize, favoriteControl, findMovie } from "../../../../util";
 
 export function MovieDetail() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const currentParams = Object.fromEntries([...searchParams]);
-  const [movie, setMovie] = useState<IMovie>({
-    id: "",
-    name: "",
-    year: 0,
-    imdb: 0,
-    category: "",
-    poster: "",
-    description: "",
-    writers: "",
-    stars: "",
-    background: "",
-    directors: "",
-    duration: "",
-  });
+  const [movie, setMovie] = useState<IMovie>(new Movie());
   const { user } = useUserStore();
   const [isfavorite, setFavorite] = useState<boolean>();
 
@@ -120,7 +107,7 @@ export function MovieDetail() {
           </li>
           <li className="movie-detail-list-item">
             <span>Category</span>
-            {movie.category.charAt(0).toUpperCase() + movie.category.slice(1)}
+            {capitalize(movie.category)}
           </li>
         </ul>
         <p className="movie-description">{movie.description}</p>
