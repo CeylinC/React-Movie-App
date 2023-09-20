@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from "../../components";
 import { useUserStore } from "../../hook";
 
-export function SignUppage() {
+export default function SignUppage() {
     const navigate = useNavigate();
     const {clearUser} = useUserStore();
 

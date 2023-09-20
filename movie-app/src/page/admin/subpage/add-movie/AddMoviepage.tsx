@@ -19,7 +19,7 @@ type FieldType = {
   description: string;
 };
 
-export function AddMoviepage() {
+export default function AddMoviepage() {
   const [form] = Form.useForm();
   const [url, setUrl] = useState<{ poster: string; background: string }>({
     poster: "",

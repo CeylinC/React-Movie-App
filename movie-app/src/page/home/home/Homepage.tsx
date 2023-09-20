@@ -3,7 +3,7 @@ import {Navbar} from '../../../components';
 import { Outlet } from 'react-router-dom';
 import { useUserControl, useUserStore } from '../../../hook';
 
-export function Homepage() {
+export default function Homepage() {
   const {user, setUser} = useUserStore();
   
   useUserControl(user, setUser);

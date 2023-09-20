@@ -9,7 +9,7 @@ import { IMovie, Movie } from "../../../../model";
 import { useUserStore } from "../../../../hook";
 import { capitalize, favoriteControl, findMovie } from "../../../../util";
 
-export function MovieDetail() {
+export default function MovieDetail() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const currentParams = Object.fromEntries([...searchParams]);

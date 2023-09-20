@@ -71,7 +71,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   );
 };
 
-export function MovieListpage() {
+export default function MovieListpage() {
   const [form] = Form.useForm();
   const [dataList, setDataList] = useState<IColumn[]>([]);
   const [editingKey, setEditingKey] = useState("");
