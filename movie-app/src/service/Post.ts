@@ -13,27 +13,14 @@ import {
   getCountFromServer,
 } from "firebase/firestore";
 import { moviesRef, db } from "../util/firebase";
-import { ISortSelector, IColumn, IMovie, IUser } from "../model";
+import { ISortSelector, IColumn, IMovie, IUser, Movie } from "../model";
 
 let lastKey = "";
 
 const getData = async (query: QuerySnapshot, sortType: string) => {
   const movies: IMovie[] = [];
   query.forEach((doc) => {
-    movies.push({
-      id: doc.id ?? "",
-      name: doc.data().name ?? "",
-      poster: doc.data().poster ?? "",
-      year: doc.data().year ?? 0,
-      imdb: doc.data().imdb ?? 0.0,
-      category: doc.data().category ?? "",
-      directors: doc.data().directors ?? "",
-      stars: doc.data().stars ?? "",
-      duration: doc.data().duration ?? "",
-      writers: doc.data().writers ?? "",
-      background: doc.data().background ?? "",
-      description: doc.data().description ?? "",
-    });
+    movies.push(new Movie({ ...doc.data(), id: doc.id }));
     lastKey = doc.data()[sortType];
   });
   return movies;
@@ -59,20 +46,7 @@ const getMovieList = async () => {
   const movies: IMovie[] = [];
   const querySnapshot = await getDocs(moviesRef);
   querySnapshot.forEach((doc) => {
-    movies.push({
-      id: doc.id ?? "",
-      name: doc.data().name ?? "",
-      poster: doc.data().poster ?? "",
-      year: doc.data().year ?? 0,
-      imdb: doc.data().imdb ?? 0.0,
-      category: doc.data().category ?? "",
-      directors: doc.data().directors ?? "",
-      stars: doc.data().stars ?? "",
-      duration: doc.data().duration ?? "",
-      writers: doc.data().writers ?? "",
-      background: doc.data().background ?? "",
-      description: doc.data().description ?? "",
-    });
+    movies.push(new Movie({ ...doc.data(), id: doc.id }));
   });
   return movies;
 };
@@ -118,20 +92,7 @@ const getMovieData = async (id: string) => {
   const docSnap = await getDoc(doc(db, "movies", id));
   const movie = docSnap.data();
   if (movie) {
-    return {
-      id: docSnap.id ?? "",
-      name: movie.name ?? "",
-      poster: movie.poster ?? "",
-      year: movie.year ?? 0,
-      imdb: movie.imdb ?? 0.0,
-      category: movie.category ?? "",
-      directors: movie.directors ?? "",
-      stars: movie.stars ?? "",
-      duration: movie.duration ?? "",
-      writers: movie.writers ?? "",
-      background: movie.background ?? "",
-      description: movie.description ?? "",
-    };
+    return new Movie({ ...movie, id: docSnap.id });
   }
 };
 
