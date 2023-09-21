@@ -5,7 +5,7 @@ import { CustomIcon } from "../../../../components";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateFavoriteMovies } from "../../../../service";
-import { IMovie, Movie } from "../../../../model";
+import { IMovie, IconData, Movie } from "../../../../model";
 import { useUserStore } from "../../../../hook";
 import { capitalize, favoriteControl, findMovie } from "../../../../util";
 
@@ -65,7 +65,7 @@ export default function MovieDetail() {
         <h1>{movie.name}</h1>
         <div className="icons">
           <div className="imdb">
-            <CustomIcon icon="imdb" />
+            <CustomIcon iconData={IconData.imdb} size="30px" color='#f3ce13'/>
             <span className="imdb-score">{movie.imdb}</span>
           </div>
           <Tooltip title={isfavorite ? "Remove Favorite" : "Add Favorite"}>
