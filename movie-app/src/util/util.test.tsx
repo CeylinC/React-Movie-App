@@ -29,7 +29,7 @@ describe("Util Functions", () => {
   });
   test("capitalize function is correctly", () => {
     const control = "mock";
-    capitalize(control);
-    expect(control).toBe("Mock");
+    const value = capitalize(control);
+    expect(value).toBe("Mock");
   });
 });
