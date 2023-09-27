@@ -5,12 +5,10 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth, db } from "../util/firebase";
+import { auth, db } from "../util";
 import { NavigateFunction } from "react-router-dom";
-import { ErrorCode } from "../model/enum/Error";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { IUser } from "../model/interface/IUser";
-import { User as UserModel } from "../model/class/User";
+import { User as UserModel, ErrorCode, IUser } from "../model";
 
 let user: User;
 

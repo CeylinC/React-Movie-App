@@ -12,15 +12,15 @@ interface MovieState {
   addMovie: (movie: IMovie) => void;
   clearMovies: () => void;
   fetchMoreData: (
-    sort: ISortSelector,
     moviesCount: number,
-    setHasMore: (value: boolean) => void
+    setHasMore: (value: boolean) => void,
+    sort?: ISortSelector
   ) => void;
-  getFirstData: (sort: ISortSelector) => void;
+  getFirstData: (sort?: ISortSelector) => void;
   getUserFavoriteMovies: (user: IUser | undefined) => void;
 }
 
-export const useMoviesStore = create<MovieState>((set, get) => ({
+export const useMoviesStore = create<MovieState>((set) => ({
   movies: [],
   addMovie: (movie: IMovie) => {
     set((state) => ({
@@ -32,12 +32,14 @@ export const useMoviesStore = create<MovieState>((set, get) => ({
   },
   clearMovies: () => set({ movies: [] }),
   fetchMoreData: async (
-    sort: ISortSelector,
     moviesCount: number,
-    setHasMore: (value: boolean) => void
+    setHasMore: (value: boolean) => void,
+    sort?: ISortSelector
   ) => {
-    const movieQuery = await getNextQuery(sort);
-    let movieData = await getData(movieQuery, sort.sort);
+    const movieQuery = await getNextQuery(
+      sort || { sort: "name", order: "asc" }
+    );
+    let movieData = await getData(movieQuery, sort?.sort || "name");
     set((state) => {
       if (state.movies.length >= moviesCount) {
         setHasMore(false);
@@ -47,9 +49,11 @@ export const useMoviesStore = create<MovieState>((set, get) => ({
       };
     });
   },
-  getFirstData: async (sort: ISortSelector) => {
-    const firstQuery = await getFirstQuery(sort);
-    const movies = await getData(firstQuery, sort.sort);
+  getFirstData: async (sort?: ISortSelector) => {
+    const firstQuery = await getFirstQuery(
+      sort || { sort: "name", order: "asc" }
+    );
+    const movies = await getData(firstQuery, sort?.sort || "name");
     set((state) => ({
       movies: [...state.movies, ...movies],
     }));

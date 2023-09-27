@@ -154,7 +154,7 @@ export default function HomepageMovieList() {
           <InfiniteScroll
             style={{ overflow: "hidden" }}
             dataLength={movies.length}
-            next={() => fetchMoreData(sort, moviesCount, setHasMore)}
+            next={() => fetchMoreData(moviesCount, setHasMore, sort)}
             hasMore={hasMore}
             loader={<Loading height={"200px"} />}
             endMessage={
