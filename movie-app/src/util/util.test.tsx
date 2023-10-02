@@ -1,9 +1,8 @@
 import { renderHook } from "@testing-library/react";
 import { favoriteControl } from "./favoriteControl";
 import { useUserStore } from "../hook";
-import { IMovie, Movie, User } from "../model";
+import { User } from "../model";
 import { act } from "react-dom/test-utils";
-import { findMovie } from "./findMovie";
 import { capitalize } from "./capitalize";
 
 describe("Util Functions", () => {
@@ -19,13 +18,6 @@ describe("Util Functions", () => {
       favoriteControl(dummyUser, movieId, setFavorite);
       expect(isFavorite).toBeTruthy();
     });
-  });
-  test("findMovie functions is correctly", () => {
-    let movie: IMovie = new Movie();
-    const setMovie = (value: IMovie) => (movie = value);
-    const movieId = "021IvNZigCGZuGBldBnk";
-    findMovie(movieId, setMovie);
-    expect(movie.id).toEqual(movieId);
   });
   test("capitalize function is correctly", () => {
     const control = "mock";

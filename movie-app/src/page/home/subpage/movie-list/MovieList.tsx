@@ -165,7 +165,10 @@ export default function HomepageMovieList() {
           </InfiniteScroll>
         </>
       ) : (
-        <MovieCardSection filter="all" />
+        <>
+          <h2>"{searchParams.get("search")}" Results</h2>
+          <MovieCardSection filter="all" search={searchParams.get("search")} />
+        </>
       )}
     </div>
   );

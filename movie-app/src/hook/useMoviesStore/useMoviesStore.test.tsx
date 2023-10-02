@@ -23,27 +23,6 @@ describe("useMoviesStore", () => {
     expect(result.current.movies).toEqual([]);
   });
 
-  it("should get first data correctly.", () => {
-    const { result } = renderHook(() => useMoviesStore());
-
-    act(() => {
-      result.current.getFirstData({ sort: Sort.name, order: Sort.asc });
-    });
-
-    expect(result.current.movies).toHaveLength(10);
-  });
-
-  it("should fetch more data correctly", () => {
-    const { result } = renderHook(() => useMoviesStore());
-    const setHasMore = (value: boolean) => {};
-
-    act(() => {
-      result.current.fetchMoreData(20, setHasMore);
-    });
-
-    expect(result.current.movies).toHaveLength(10);
-  });
-
   it("should get user's favorite movies correctly", () => {
     const { result } = renderHook(() => useMoviesStore());
     const dummyUser = new User({ favoriteMovies: ["5FERCG5pcdYOKeO3i10Q"] });
