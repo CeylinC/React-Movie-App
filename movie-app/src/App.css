@@ -1,3 +1,5 @@
+@tailwind utilities;
+
 :root{
   --primary-color: #FFD369;
   --background-color: #393E46;

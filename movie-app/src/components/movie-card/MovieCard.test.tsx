@@ -42,19 +42,22 @@ describe("Movie Card Component", () => {
 
   test("The movie imdb in the Movie Card Component is correct", () => {
     const container = setup();
-    const cardImdb = getByClass(container, "imdb");
-    expect(cardImdb).toHaveTextContent(movie.imdb.toString());
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const cardImdb = container.getElementsByClassName("imdb");
+    expect(cardImdb[0]).toHaveTextContent(movie.imdb.toString());
   });
 
   test("The movie url in the Movie Card Component is correct", () => {
     const container = setup();
-    const cardUrl = getByClass(container, "movie-card");
-    expect(cardUrl).toHaveAttribute("href", `/movie?id=${movie.id}`);
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const cardUrl = container.getElementsByClassName("movie-card");
+    expect(cardUrl[0]).toHaveAttribute("href", `/movie?id=${movie.id}`);
   });
 
   test("The title in the Movie Card Component is correct", () => {
     const container = setup();
-    const cardTitle = getByClass(container, "movie-card");
-    expect(cardTitle).toHaveAttribute("title", movie.name);
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const cardTitle = container.getElementsByClassName("movie-card");
+    expect(cardTitle[0]).toHaveAttribute("title", movie.name);
   });
 });

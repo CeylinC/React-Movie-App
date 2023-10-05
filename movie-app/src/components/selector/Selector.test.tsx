@@ -39,7 +39,8 @@ describe("Selector Component", () => {
   });
   test("The placeholder should appear in the Selector Component", () => {
     const container = setup();
-    const placeholder = getByClass(container, "selector-label");
-    expect(placeholder).toHaveTextContent(param.placeholder);
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const placeholder = container.getElementsByClassName("selector-label");
+    expect(placeholder[0]).toHaveTextContent(param.placeholder);
   });
 });

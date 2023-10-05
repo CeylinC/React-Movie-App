@@ -20,18 +20,20 @@ const setup = (username?: string) => {
 describe("Navbar Component", () => {
   test("If the user is logged in, the navbar shows username.", () => {
     let param = {
-      username: "",
+      username: "Username",
     };
     const container = setup(param.username);
-    const username = getByClass(container, "user-name");
-    const result = param.username !== "" ? param.username : "There!";
-    expect(username).toHaveTextContent(result);
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const username = container.getElementsByClassName("user-name");
+    const result = param.username;
+    expect(username[0]).toHaveTextContent(result);
   });
 
   test("If the user is not logged in, the navbar will say 'There!' instead of username shows.", () => {
     const container = setup();
-    const username = getByClass(container, "user-name");
-    expect(username).toHaveTextContent("There!");
+    // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
+    const username = container.getElementsByClassName("user-name");
+    expect(username[0]).toHaveTextContent("There!");
   });
 
   test("When you click on the account, it takes you to the login page.", () => {

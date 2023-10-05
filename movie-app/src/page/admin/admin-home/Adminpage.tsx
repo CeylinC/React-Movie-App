@@ -1,4 +1,3 @@
-import "./Adminpage.css";
 import { Layout, Menu, theme } from "antd";
 import { useEffect } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
@@ -41,9 +40,11 @@ export default function Adminpage() {
   }, [user]);
 
   return (
-    <Layout className="Adminpage">
+    <Layout className="Adminpage min-h-screen">
       <Sider breakpoint="lg" collapsedWidth="0">
-          <div className="sidebar-logo"><Logo fontSize="2rem" /></div>
+        <div className="sidebar-logo flex justify-center items-center h-20 w-full">
+          <Logo fontSize="2rem" />
+        </div>
         <Menu
           theme="dark"
           mode="inline"
@@ -65,7 +66,7 @@ export default function Adminpage() {
             <Outlet />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>
+        <Footer className="text-center">
           MoW ©2023 Created by CeylinC
         </Footer>
       </Layout>

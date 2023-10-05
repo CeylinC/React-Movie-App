@@ -1,9 +1,0 @@
-.Adminpage{
-    min-height: 100vh;
-}
-.Adminpage .sidebar-logo{
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}

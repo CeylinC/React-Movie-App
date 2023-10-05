@@ -80,10 +80,10 @@ export default function HomepageMovieList() {
   );
 
   return (
-    <div className="movie-list">
+    <div className="movie-list mt-40">
       {!searchParams.get("search") ? (
         <>
-          <div className="sort-filter-menu">
+          <div className="sort-filter-menu flex justify-end">
             <div className="sort-menu">
               <Selector
                 placeholder="Sort By : "

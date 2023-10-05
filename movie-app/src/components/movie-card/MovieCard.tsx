@@ -4,13 +4,17 @@ import "./MovieCard.css";
 import { Card, ConfigProvider, theme } from "antd";
 const { Meta } = Card;
 
-interface IProp{
-  movie : IMovie
+interface IProp {
+  movie: IMovie;
 }
 
-export function MovieCard({ movie } : IProp) {
+export function MovieCard({ movie }: IProp) {
   return (
-    <Link to={`/movie?id=${movie.id}`} className="movie-card" title={movie.name}>
+    <Link
+      to={`/movie?id=${movie.id}`}
+      className="movie-card relative inline-block no-underline cursor-pointer m-2"
+      title={movie.name}
+    >
       <ConfigProvider
         theme={{
           algorithm: theme.darkAlgorithm,
@@ -25,20 +29,16 @@ export function MovieCard({ movie } : IProp) {
           },
         }}
       >
-        <div className="imdb">
+        <div className="imdb w-6 h-6 text-center p-1 text-white inline absolute rounded-full top-3.5 right-3.5 z-50">
           {movie.imdb}
         </div>
         <Card
-        bordered={false}
-        cover={
-          <img
-            alt="Movie Poster"
-            src={movie.poster}
-          />
-        }
-      >
-        <Meta title={movie.name} description={movie.year} />
-      </Card>
+          bordered={false}
+          cover={<img alt="Movie Poster" src={movie.poster} className="object-cover w-full"/>}
+          className="w-60"
+        >
+          <Meta title={movie.name} description={movie.year} />
+        </Card>
       </ConfigProvider>
     </Link>
   );

@@ -51,7 +51,7 @@ export default function MovieDetail() {
 
   return (
     <div
-      className="movie-detail"
+      className="movie-detail w-full h-full bg-no-repeat bg-cover bg-center"
       style={{
         backgroundImage: `linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0.5)), url(${
           movie.background !== ""
@@ -60,13 +60,13 @@ export default function MovieDetail() {
         })`,
       }}
     >
-      <div className="movie-detail-aside">
-        <Image src={movie.poster} width={75} />
+      <div className="movie-detail-aside box-border w-1/2 h-full px-3 py-10">
+        <Image src={movie.poster} width={75} className="float-left mt-5 ml-5"/>
         <h1>{movie.name}</h1>
-        <div className="icons">
-          <div className="imdb">
+        <div className="icons flex flex-row justify-between">
+          <div className="imdb flex content-center items-center">
             <CustomIcon iconData={IconData.imdb} size="30px" color='#f3ce13'/>
-            <span className="imdb-score">{movie.imdb}</span>
+            <span className="imdb-score flex content-center text-xl ml-2">{movie.imdb}</span>
           </div>
           <Tooltip title={isfavorite ? "Remove Favorite" : "Add Favorite"}>
             <Button
@@ -84,7 +84,7 @@ export default function MovieDetail() {
             />
           </Tooltip>
         </div>
-        <ul className="movie-detail-list">
+        <ul className="movie-detail-list list-none p-0 my-12 mx-0">
           <li className="movie-detail-list-item">
             <span>Directors</span>
             {movie.directors}

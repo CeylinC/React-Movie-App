@@ -173,7 +173,7 @@ export default function MovieListpage() {
       editable: true,
     },
     {
-      title: "operation",
+      title: "Operation",
       dataIndex: "operation",
       render: (_: any, record: IColumn) => {
         const editable = isEditing(record);
