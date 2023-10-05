@@ -1,9 +1,3 @@
-#logo{
-    font-weight: bold;
-    color: white;
-    text-decoration: none;
-}
 #logo span{
     color: var(--primary-color);
-    font-weight: normal;
 }

@@ -25,8 +25,8 @@ export default function SignUppage() {
     };
 
     return (
-        <div className="sign-up-page">
-            <Logo fontSize="2rem"/>
+        <div className="sign-up-page flex justify-end items-center h-screen bg-cover bg-center bg-no-repeat">
+            <Logo fontSize="2rem" className="absolute top-4 right-4"/>
             <ConfigProvider
                 theme={{
                     algorithm: theme.darkAlgorithm,
@@ -47,7 +47,7 @@ export default function SignUppage() {
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
                     autoComplete="off"
-                    className="sign-up-form"
+                    className="sign-up-form w-1/2 flex items-center justify-center flex-col p-8 h-screen"
                 >
                     <h1>Sign Up</h1>
                     <Form.Item

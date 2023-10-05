@@ -2,16 +2,21 @@ import "./Selector.css";
 import { Select, ConfigProvider } from "antd";
 
 interface IProp {
-  placeholder: string,
-  options: { label: string, value: string }[],
-  onChange: (value: string) => void,
-  defaultValue: string,
+  placeholder: string;
+  options: { label: string; value: string }[];
+  onChange: (value: string) => void;
+  defaultValue: string;
 }
 
-export function Selector({ placeholder, options, onChange, defaultValue }: IProp) {
+export function Selector({
+  placeholder,
+  options,
+  onChange,
+  defaultValue,
+}: IProp) {
   return (
-    <div className="selector">
-      <label className="selector-label">{placeholder}</label>
+    <div className="selector rounded-md pl-3 m-3">
+      <label className="selector-label text-sm">{placeholder}</label>
       <ConfigProvider>
         <Select
           className="selector-select"
@@ -25,7 +30,6 @@ export function Selector({ placeholder, options, onChange, defaultValue }: IProp
           onChange={onChange}
         />
       </ConfigProvider>
-
     </div>
   );
 }

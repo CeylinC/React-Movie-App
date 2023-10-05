@@ -1,48 +1,24 @@
-.sign-in-page{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100vh;
+.log-in-page{
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url(https://wallpapercave.com/wp/wp1945897.jpg);
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
 }
-
-.sign-in-page #logo{
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-}
-
-.sign-in-form{
+.log-in-form{
     background-color: var(--navbar-color);
-    width: 50%;
     max-width: 500px;
     min-width: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 30px;
-    height: 100vh;
     box-shadow: 10px 10px 20px 12px rgba(0, 0, 0, 0.4);
 }
-
-.sign-in-form a{
+.log-in-form a{
     color: var(--primary-color);
 }
-
-.sign-in-form .ant-form-item{
+.log-in-form .ant-form-item{
     width: 100%;
 }
-
 @media screen and (max-width: 425px) {
-    .sign-in-page{
+    .log-in-page{
         justify-content: center;
         background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url(https://wallpapercave.com/wp/wp1945897.jpg);
     }
-    .sign-in-form{
+    .log-in-form{
         box-shadow: 0 0 20px 12px rgba(0, 0, 0, 0.4);
         height: auto;
         border-radius: 10px;

@@ -1,35 +1,15 @@
 .movie-card{
-    position: relative;
-    cursor: pointer;
-    transition: all 0.5s ease-in-out;
-    display: inline-block;
-    text-decoration: none;
+  transition: scale 0.3s ease-in-out;
 }
 .movie-card:hover{
-    scale: 1.05;
+  scale: 1.05;
 }
-.movie-card :where(.css-dev-only-do-not-override-4a6tpf).ant-card .ant-card-meta-title {
-    font-size: 1.7rem;
+.movie-card .imdb {
+  background-color: #ffc32c;
 }
-.movie-card .imdb{
-    background-color: #ffc32c;
-    display: inline;
-    border-radius: 50%;
-    padding: 5px;
-    position: absolute;
-    z-index: 100;
-    top: 10px;
-    right: 10px;
-    color: white;
-    width: 21.6px;
-    text-align: center;
+.movie-card .ant-card-meta-title {
+  font-size: 1.7rem;
 }
-.movie-card .ant-card{
-    width: 240px;
-}
-
-.movie-card .ant-card .ant-card-cover img{
-    object-fit: cover;
-    width: 100%;
-    height: 350px;
+.movie-card .ant-card .ant-card-cover img {
+  height: 350px;
 }

@@ -1,5 +1,4 @@
 import { ConfigProvider, Spin } from "antd";
-import "./Loading.css";
 
 interface IProp {
   height: string;
@@ -7,7 +6,10 @@ interface IProp {
 
 export function Loading({ height }: IProp) {
   return (
-    <div className="loading" style={{ height: height }}>
+    <div
+      className="loading w-full flex content-center justify-center"
+      style={{ height: height }}
+    >
       <ConfigProvider
         theme={{
           token: {

@@ -1,4 +1,3 @@
-import "./MovieCardSection.css";
 import { MovieCard } from "../../components";
 import { useMoviesStore } from "../../hook";
 
@@ -10,8 +9,8 @@ interface IProp {
 export function MovieCardSection({ filter, search }: IProp) {
   const moviesList = useMoviesStore((state) => state.movies);
   return (
-    <div className="movie-card-section">
-      <div className="movie-card-list">
+    <div className="movie-card-section w-full flex items-center flex-col">
+      <div className="movie-card-list flex flex-wrap justify-center mb-12">
         {search
           ? moviesList
               .filter((movie) =>
