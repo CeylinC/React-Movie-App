@@ -343,9 +343,7 @@ export default function MovieListpage() {
                   key: "5",
                   label: "Background",
                   children:
-                    editingKey === "" ? (
-                      record.background
-                    ) : (
+                    editingKey !== "" ? (
                       <Form.Item
                         name="background"
                         style={{ width: "80%" }}
@@ -361,6 +359,8 @@ export default function MovieListpage() {
                           defaultValue={record.background}
                         ></Input>
                       </Form.Item>
+                    ) : record.background === "" ? "none background" : (
+                      <Image width={200} src={record.background} />
                     ),
                 },
                 {
