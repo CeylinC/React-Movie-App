@@ -94,7 +94,7 @@ export default function HomepageMovieList() {
                   },
                   {
                     value: Sort.za,
-                    label: Sort.za.toLowerCase(),
+                    label: Sort.za.toUpperCase(),
                   },
                   {
                     value: Sort.latest,
@@ -108,11 +108,11 @@ export default function HomepageMovieList() {
                 defaultValue={
                   sort.order === Sort.desc
                     ? sort.sort === Sort.name
-                      ? Sort.za.toUpperCase()
-                      : capitalize(Sort.latest)
+                      ? Sort.za
+                      : Sort.latest
                     : sort.sort === Sort.name
-                    ? Sort.az.toUpperCase()
-                    : capitalize(Sort.oldest)
+                    ? Sort.az
+                    : Sort.oldest
                 }
                 onChange={(value) => changeSort(value)}
               />

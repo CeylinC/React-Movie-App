@@ -34,8 +34,8 @@ export const routes = [
     path: "/admin",
     element: <Adminpage />,
     route: [
-      { path: "admin/movie-list", element: <MovieListpage /> },
-      { path: "admin/add-movie", element: <AddMoviepage /> },
+      { path: "/admin/movie-list", element: <MovieListpage /> },
+      { path: "/admin/add-movie", element: <AddMoviepage /> },
     ],
   },
   { path: "/log-in", element: <LogInpage /> },

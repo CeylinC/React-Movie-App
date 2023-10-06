@@ -18,7 +18,7 @@ export default function FavoriteMovieList() {
   }, [user]);
 
   return (
-    <div className="movie-list">
+    <div className="movie-list mt-40">
       <MovieCardSection filter="all" />
     </div>
   );
