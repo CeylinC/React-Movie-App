@@ -1,7 +1,7 @@
 import { IMovie } from "../model";
 import { getMovieData } from "../service";
 
-export const findMovie = (
+export const findMovie = async (
   movieID: string,
   setMovie: (movie: IMovie) => void
 ) => {
@@ -11,5 +11,5 @@ export const findMovie = (
       setMovie(movieData);
     }
   };
-  getMovie();
+  await getMovie();
 };
