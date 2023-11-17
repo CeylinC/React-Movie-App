@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { IMovie } from "../../model";
 import "./MovieCard.css";
 import { Card, ConfigProvider, theme } from "antd";
+import clsx from "clsx";
 const { Meta } = Card;
 
 interface IProp {
@@ -29,7 +30,13 @@ export function MovieCard({ movie }: IProp) {
           },
         }}
       >
-        <div className="imdb w-6 h-6 text-center p-1 text-white inline absolute rounded-full top-3.5 right-3.5 z-50">
+        <div className={clsx(
+          "imdb w-[24px] h-[24px] p-1 text-[var(--white)]",
+          "inline absolute rounded-full top-3.5 right-3.5 z-50",
+          {
+            "text-center" : true,
+          },
+        )}>
           {movie.imdb}
         </div>
         <Card

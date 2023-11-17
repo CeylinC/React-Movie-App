@@ -6,6 +6,7 @@
   --navbar-color: #222831;
   --input-color: #20252d;
   --selector-hover-color: #1b1f26;
+  --white: #fff;
 }
 body{
   background-color: var(--background-color);

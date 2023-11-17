@@ -8,7 +8,13 @@ import {
 import { auth, db } from "../util";
 import { NavigateFunction } from "react-router-dom";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { User as UserModel, ErrorCode, IUser } from "../model";
+import {
+  User as UserModel,
+  ErrorCode,
+  IUser,
+  Movie,
+  loginUserErrorMessage,
+} from "../model";
 
 let user: User;
 
@@ -34,23 +40,9 @@ const createUser = (
         })
         .catch((error) => {
           const errorCode = error.code;
-          switch (errorCode) {
-            case ErrorCode.emailAlreadyInUse:
-              alert("Email Already in Use");
-              break;
-            case ErrorCode.weakPassword:
-              alert("Weak Password");
-              break;
-            case ErrorCode.invalidEmail:
-              alert("Invalid Email");
-              break;
-            case ErrorCode.tooManyRequests:
-              alert("You're too fast. Wait a little");
-              break;
-            default:
-              alert(errorCode);
-              break;
-          }
+          alert(
+            loginUserErrorMessage[errorCode as ErrorCode] ?? "Unexpected Error"
+          );
         });
     })
     .catch((error) => {
@@ -77,23 +69,9 @@ const loginUser = (
         })
         .catch((error) => {
           const errorCode = error.code;
-          switch (errorCode) {
-            case ErrorCode.userNotFound:
-              alert("User not found :(");
-              break;
-            case ErrorCode.wrongPassword:
-              alert("Wrong Password");
-              break;
-            case ErrorCode.invalidEmail:
-              alert("Invalid Email");
-              break;
-            case ErrorCode.tooManyRequests:
-              alert("You're too fast. Wait a little");
-              break;
-            default:
-              alert(errorCode);
-              break;
-          }
+          alert(
+            loginUserErrorMessage[errorCode as ErrorCode] ?? "Unexpected Error"
+          );
         });
     })
     .catch((error) => {
