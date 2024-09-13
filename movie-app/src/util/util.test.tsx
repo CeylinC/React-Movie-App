@@ -1,9 +1,10 @@
 import { renderHook } from "@testing-library/react";
-import { favoriteControl, capitalize, findMovie } from "./index";
+import { favoriteControl, capitalize } from "./index";
 import { useUserStore } from "../hook";
 import { Movie, User } from "../model";
 import { act } from "react-dom/test-utils";
 import * as service from "../service";
+import { findMovie } from "./findMovie";
 
 jest.mock("../service", () => ({ getMovieData: jest.fn() }));
 
